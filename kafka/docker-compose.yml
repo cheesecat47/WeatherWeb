@@ -1,0 +1,40 @@
+# https://jobc.tistory.com/213
+# https://m.blog.naver.com/wideeyed/221973877361
+# https://soyoung-new-challenge.tistory.com/111
+# https://victorydntmd.tistory.com/347
+
+version: "3.7"
+
+networks: 
+  kafkaEx:
+    driver: bridge
+
+services: 
+  zookeeper:
+    image: zookeeper
+    # restart: always
+    volumes:
+      - ../data/zookeeper/data:/data
+      - ../data/zookeeper/datalog:/datalog
+    ports:
+      - "2181:2181"
+    networks: 
+      - kafkaEx
+
+  kafka:
+    image: wurstmeister/kafka
+    depends_on: 
+      - zookeeper
+    # restart: always
+    environment: 
+      KAFKA_BROKER_ID: 0
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "test:1:1"
+    ports:
+      - "9092:9092"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../data/kafka/log:/opt/kafka/logs
+    networks: 
+      - kafkaEx
