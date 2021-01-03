@@ -1,0 +1,17 @@
+# https://happygrammer.github.io/docker/mariadb/
+
+version: "3.7"
+
+services: 
+  mariadb:
+    image: mariadb:10.5.8
+    container_name: mariadb
+    # restart: always
+    volumes:
+      - ../data/mariadb/data:/var/lib/mysql
+      - ./config:/etc/mysql
+      - ./sql/maria.init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    environment: 
+      - MYSQL_ROOT_PASSWORD=1234

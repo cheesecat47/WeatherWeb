@@ -13,4 +13,14 @@ windows:
       pre: cd kafka
       panes:
           - sudo docker-compose up -d && sudo docker-compose logs -f
+  - mariadb:
+      layout: main-vertical
+      pre: cd dbserver
+      panes:
+          - sudo docker-compose up -d && sudo docker-compose logs -f
+  - nginx:
+      layout: main-vertical
+      pre: cd nginx
+      panes:
+          - sudo docker-compose up -d && sudo docker-compose logs -f
   # - logs: tail -f log/development.log

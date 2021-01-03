@@ -8,8 +8,10 @@
 
 | Name | Version | Link |
 |:-:|:-:|:-:|
-| Docker |  | [link][Docker] |
-| Docker-compose |  | [link][Docker-compose] |
+| Docker |  | <https://docs.docker.com/engine/install/> |
+| Docker-compose |  | <https://docs.docker.com/compose/install/> |
+| NGINX | 1.19.6 | <https://hub.docker.com/_/nginx> |
+| MariaDB | 10.5.8 | <https://hub.docker.com/_/mariadb> |
 
 * tmux & [tmuxinator](https://github.com/tmuxinator/tmuxinator) (additional)
 
@@ -34,10 +36,8 @@ cd WeatherWeb
 
 ## Contributors' info
   
-An Taegeon - [atg0831](https://github.com/atg0831)  
-Shin Juyong – [cheesecat47](https://github.com/cheesecat47)  
+An Taegeon - <https://github.com/atg0831>  
+Han Jinkyu - <https://github.com/jinkyuhan>
+Shin Juyong – <https://github.com/cheesecat47>  
 
 [https://github.com/cheesecat47/WeatherWeb](https://github.com/cheesecat47/WeatherWeb)  
-
-[Docker]: https://docs.docker.com/engine/install/
-[Docker-compse]: https://docs.docker.com/compose/install/

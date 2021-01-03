@@ -1,0 +1,22 @@
+# https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-docker/
+# https://medium.com/sjk5766/docker-compose%EB%A1%9C-localhost-nginx-%EB%A6%AC%EB%B2%84%EC%8A%A4-%ED%94%84%EB%A1%9D%EC%8B%9C-%EA%B5%AC%EC%84%B1-8214d41a94fc
+
+version: "3.7"
+
+networks: 
+  nginx_network:
+    driver: bridge
+
+services: 
+  nginx:
+    image: nginx:1.19.6
+    container_name: nginx
+    # restart: always
+    volumes:
+      # - ../data/nginx/data:/data
+      - ./content:/usr/share/nginx/html:ro
+      - ./config/nginx:/etc/nginx
+    ports:
+      - "8080:80"
+    networks: 
+      - nginx_network

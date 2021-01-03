@@ -12,6 +12,7 @@ networks:
 services: 
   zookeeper:
     image: zookeeper
+    container_name: weatherweb_zk
     # restart: always
     volumes:
       - ../data/zookeeper/data:/data
@@ -23,6 +24,7 @@ services:
 
   kafka:
     image: wurstmeister/kafka
+    container_name: weatherweb_kafka
     depends_on: 
       - zookeeper
     # restart: always
