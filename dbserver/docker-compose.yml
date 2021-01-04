@@ -2,6 +2,10 @@
 
 version: "3.7"
 
+networks: 
+  network:
+    driver: bridge
+
 services: 
   mariadb:
     image: mariadb:10.5.8
@@ -15,3 +19,5 @@ services:
       - "3306:3306"
     environment: 
       - MYSQL_ROOT_PASSWORD=1234
+    networks: 
+      - network

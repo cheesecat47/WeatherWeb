@@ -6,12 +6,12 @@
 version: "3.7"
 
 networks: 
-  kafkaEx:
+  network:
     driver: bridge
 
 services: 
   zookeeper:
-    image: zookeeper
+    image: zookeeper:3.6.2
     container_name: weatherweb_zk
     # restart: always
     volumes:
@@ -20,10 +20,10 @@ services:
     ports:
       - "2181:2181"
     networks: 
-      - kafkaEx
+      - network
 
   kafka:
-    image: wurstmeister/kafka
+    image: wurstmeister/kafka:2.12-2.2.0
     container_name: weatherweb_kafka
     depends_on: 
       - zookeeper
@@ -39,4 +39,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ../data/kafka/log:/opt/kafka/logs
     networks: 
-      - kafkaEx
+      - network

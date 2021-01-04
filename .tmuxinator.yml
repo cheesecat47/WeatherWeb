@@ -1,25 +1,25 @@
 # ./.tmuxinator.yml
 
-name: weatherweb
+name: project
 root: ./
 
 windows:
-  - git:
-      layout: main-vertical
-      panes:
-        - git status
+#   - git:
+#       layout: main-horizontal
+#       panes:
+#         - git status
   - kafka: 
-      layout: main-vertical
+      layout: main-horizontal
       pre: cd kafka
       panes:
           - sudo docker-compose up -d && sudo docker-compose logs -f
   - mariadb:
-      layout: main-vertical
+      layout: main-horizontal
       pre: cd dbserver
       panes:
           - sudo docker-compose up -d && sudo docker-compose logs -f
   - nginx:
-      layout: main-vertical
+      layout: main-horizontal
       pre: cd nginx
       panes:
           - sudo docker-compose up -d && sudo docker-compose logs -f
