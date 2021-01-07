@@ -14,6 +14,10 @@
 $ sudo docker-compose up -d && sudo docker-compose logs -f
 ```
 
+```bash
+$ mysql -u root -p webpracticedb
+```
+
 ---
 
 ## References
