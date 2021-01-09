@@ -1,4 +1,4 @@
-# WeatherWeb
+# webpractice
 
 > Project for studying Kafka, Rest api, etc.
 
@@ -18,8 +18,8 @@
 ## How to Use
 
 ```bash
-git clone https://github.com/cheesecat47/WeatherWeb.git
-cd WeatherWeb
+git clone https://github.com/cheesecat47/webpractice.git
+cd webpractice
 ```
 
 1. If you installed tmux & tmuxinator, run this.  
@@ -32,13 +32,25 @@ cd WeatherWeb
 
 ---
 
+## Deploy Ports
+
+| Dir | Name | Port # |
+|:-:|:-:|:-:|
+| kafka | zookeeper | 31010 |
+| kafka | kafka | 31020 |
+| nginx | nginx | 32000 |
+| dbserver | mariadb | 33010 |
+| dbserver | adminer | 33020 |
+
+---
+
 ## Contributors' info
   
 An Taegeon - <https://github.com/atg0831>  
 Han Jinkyu - <https://github.com/jinkyuhan>  
 Shin Juyong – <https://github.com/cheesecat47>  
 
-[https://github.com/cheesecat47/WeatherWeb](https://github.com/cheesecat47/WeatherWeb)  
+[https://github.com/cheesecat47/webpractice](https://github.com/cheesecat47/webpractice)  
 
 ## References
 

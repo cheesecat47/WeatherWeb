@@ -4,23 +4,21 @@ name: project
 root: ./
 
 windows:
-#   - git:
-#       layout: main-horizontal
-#       panes:
-#         - git status
-  - kafka: 
+  - main:
       layout: main-horizontal
-      pre: cd kafka
       panes:
-          - sudo docker-compose up -d && sudo docker-compose logs -f
+          - ./up.sh && exit
+  - kafka: 
+      layout: main-horizontal   
+      panes:
+          - docker logs -f webpractice_kafka_1
+          - docker logs -f webpractice_zookeeper_1
   - mariadb:
       layout: main-horizontal
-      pre: cd dbserver
       panes:
-          - sudo docker-compose up -d && sudo docker-compose logs -f
+          - docker logs -f webpractice_mariadb_1
   - nginx:
       layout: main-horizontal
-      pre: cd nginx
       panes:
-          - sudo docker-compose up -d && sudo docker-compose logs -f
+          - docker logs -f webpractice_nginx_1
   # - logs: tail -f log/development.log

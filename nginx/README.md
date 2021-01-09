@@ -1,4 +1,4 @@
-# WeatherWeb - nginx
+# webpractice - nginx
 
 ## Environment
 

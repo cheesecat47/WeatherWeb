@@ -1,4 +1,4 @@
-# WeatherWeb - db
+# webpractice - db
 
 ## Environment
 
@@ -20,8 +20,7 @@ $ mysql -u root -p webpracticedb
 
 Down the components
 ```bash
-$ docker-compose down
-$ rm -rf ../data/mariadb
+$ docker-compose down -v
 ```
 
 ---

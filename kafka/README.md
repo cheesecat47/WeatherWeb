@@ -1,4 +1,4 @@
-# WeatherWeb - kafka
+# webpractice - kafka
 
 ## Environment
 

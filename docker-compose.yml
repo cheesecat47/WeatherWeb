@@ -1,0 +1,84 @@
+version: "3.7"
+
+services: 
+  zookeeper:
+    image: zookeeper:3.6.2
+    container_name: kafka_zk
+    volumes:
+      - kafka_zk_data:/data
+      - kafka_zk_datalog:/datalog
+    ports:
+      - 31010:2181
+
+  kafka:
+    image: wurstmeister/kafka:2.12-2.2.0
+    container_name: kafka
+    depends_on: 
+      - zookeeper
+    environment: 
+      KAFKA_BROKER_ID: 0
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:31010
+      KAFKA_CREATE_TOPICS: "test:1:1"
+    ports:
+      - 31020:9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - kafka_log:/opt/kafka/logs
+
+  nginx:
+    build:
+      context: ./nginx
+    image: nginx:1.19.6
+    container_name: nginx
+    volumes:
+      - ./nginx/content:/usr/share/nginx/html:ro
+      - ./nginx/config/nginx:/etc/nginx
+    ports:
+      - 32000:80
+
+  api:
+    image: golang:1.15.6
+    container_name: api
+    # ports:
+    #   - 
+    # volumes:
+    #  - 
+
+  react:
+    image: nginx:1.19.6
+    container_name: react
+
+  mariadb:
+    image: mariadb:10.5.8
+    container_name: db_maria
+    volumes:
+      - maria_data:/var/lib/mysql
+      - ./dbserver/config:/etc/mysql
+      - ./dbserver/sql/:/docker-entrypoint-initdb.d/
+    ports:
+      - 33010:3306
+    environment: 
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=webpracticedb
+
+  adminer:
+    image: adminer:4.7.8
+    container_name: db_adminer
+    ports: 
+      - 33020:8080
+
+volumes:
+  kafka_zk_data:
+  kafka_zk_datalog:
+  kafka_log:
+  maria_data:
+
+# https://jobc.tistory.com/213
+# https://m.blog.naver.com/wideeyed/221973877361
+# https://soyoung-new-challenge.tistory.com/111
+# https://victorydntmd.tistory.com/347
+# https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-docker/
+# https://medium.com/sjk5766/docker-compose%EB%A1%9C-localhost-nginx-%EB%A6%AC%EB%B2%84%EC%8A%A4-%ED%94%84%EB%A1%9D%EC%8B%9C-%EA%B5%AC%EC%84%B1-8214d41a94fc
+# https://happygrammer.github.io/docker/mariadb/
+# https://hub.docker.com/_/adminer
