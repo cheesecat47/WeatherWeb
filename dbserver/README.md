@@ -11,11 +11,17 @@
 ## How to Use
 
 ```bash
-$ sudo docker-compose up -d && sudo docker-compose logs -f
+$ docker-compose up -d && docker-compose logs -f
 ```
 
 ```bash
 $ mysql -u root -p webpracticedb
+```
+
+Down the components
+```bash
+$ docker-compose down
+$ rm -rf ../data/mariadb
 ```
 
 ---

@@ -13,8 +13,8 @@ services:
     container_name: db_maria
     # restart: always
     volumes:
-      # - ../data/mariadb/data:/var/lib/mysql
-      # - ./config:/etc/mysql
+      - ../data/mariadb/data:/var/lib/mysql
+      - ./config:/etc/mysql
       - ./sql/:/docker-entrypoint-initdb.d/
     ports:
       - 33060:3306
