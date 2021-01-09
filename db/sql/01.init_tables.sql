@@ -24,7 +24,7 @@ CREATE TABLE article (
 
 CREATE TABLE board (
     id INT PRIMARY KEY,
-    user_id VARCHAR(20)
+    user_id VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP
@@ -34,7 +34,7 @@ CREATE TABLE token (
     user_id VARCHAR(20) PRIMARY KEY, 
     refresh_token VARCHAR(32),
     refresh_token_expired_at TIMESTAMP,
-    fcm_token VARCHAR(32)
+    fcm_token VARCHAR(32),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP

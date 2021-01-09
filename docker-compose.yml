@@ -27,8 +27,8 @@ services:
       - kafka_log:/opt/kafka/logs
 
   nginx:
-    build:
-      context: ./nginx
+    # build:
+    #   context: ./nginx
     image: nginx:1.19.6
     container_name: nginx
     volumes:
@@ -54,8 +54,8 @@ services:
     container_name: db_maria
     volumes:
       - maria_data:/var/lib/mysql
-      - ./dbserver/config:/etc/mysql
-      - ./dbserver/sql/:/docker-entrypoint-initdb.d/
+      - ./db/config:/etc/mysql
+      - ./db/sql/:/docker-entrypoint-initdb.d/
     ports:
       - 33010:3306
     environment: 

@@ -5,20 +5,20 @@ root: ./
 
 windows:
   - main:
-      layout: main-horizontal
+      layout: main-vertical
       panes:
           - ./up.sh && exit
   - kafka: 
-      layout: main-horizontal   
+      layout: d6d3,130x40,0,0{63x40,0,0,1,66x40,64,0,4}
       panes:
-          - docker logs -f webpractice_kafka_1
-          - docker logs -f webpractice_zookeeper_1
+          - sudo docker logs -f kafka_zk
+          - sudo docker logs -f kafka
   - mariadb:
-      layout: main-horizontal
+      layout: main-vertical
       panes:
-          - docker logs -f webpractice_mariadb_1
+          - sudo docker logs -f db_maria
   - nginx:
-      layout: main-horizontal
+      layout: main-vertical
       panes:
-          - docker logs -f webpractice_nginx_1
+          - sudo docker logs -f nginx
   # - logs: tail -f log/development.log
