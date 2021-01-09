@@ -40,3 +40,4 @@ ALTER TABLE board add foreign key (user_id) references user(id);
 
 INSERT INTO user values ('jy', 'pw', 'sjy', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 insert INTO user values ('tg', 'pw2', 'atg', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+insert INTO user values ('jk', 'pw3', 'hjk', null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
