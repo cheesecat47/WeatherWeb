@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import '../css/Navigator.css';
 
 //게시판 id외에 넘어올 props 필요...?
 
-function Navigator({ id,title }) {
+function Navigator({ location }) {
+  console.log(location);
   return (
     <nav>
       <ul className="nav-container">
@@ -17,28 +18,28 @@ function Navigator({ id,title }) {
             }
           }}>Home</Link>
         </li>
-
+{/* 
         <li className="nav-item">
           <Link to={{
-            pathname: `/board:${id}`,
+            pathname: `/board:${location.state.id}`,
             state: {
               fromNavigation: true
             }
-          }}>{title}</Link>
-        </li>
+          }}>{location.state.name}</Link>
+        </li> */}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to={{
-            pathname: `/board:${id}`,
+            pathname: `/board:${location.state.id}`,
             state: {
               fromNavigation: true
             }
-          }}>{title}</Link>
-        </li>
+          }}>{name}</Link>
+        </li> */}
       </ul>
     </nav>
 
   );
 }
 
-export default Navigator;
+export default withRouter(Navigator);
