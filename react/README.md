@@ -1,4 +1,4 @@
-# webpractice - rea
+# webpractice - react
 
 ## Environment
 
@@ -11,7 +11,8 @@
 ## How to Use
 
 ```bash
-$ sudo docker-compose up -d && sudo docker-compose logs -f
+$ cd board_app
+$ npm start
 ```
 
 ---
