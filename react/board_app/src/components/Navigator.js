@@ -21,7 +21,7 @@ function Navigator({ location }) {
 {/* 
         <li className="nav-item">
           <Link to={{
-            pathname: `/board:${location.state.id}`,
+            pathname: `/board/${location.state.id}`,
             state: {
               fromNavigation: true
             }
@@ -30,7 +30,7 @@ function Navigator({ location }) {
 
         {/* <li className="nav-item">
           <Link to={{
-            pathname: `/board:${location.state.id}`,
+            pathname: `/board/${location.state.id}`,
             state: {
               fromNavigation: true
             }

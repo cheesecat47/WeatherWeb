@@ -14,7 +14,7 @@ function App() {
       <Navigator />
       <Route path="/" exact={true} component={Home} />
       <Route path="/board/:id" component={Board} />
-      <Route path="/article" component={Article} />
+      <Route path="/article/:id" component={Article} />
     </BrowserRouter>
   );
 }

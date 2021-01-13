@@ -1,0 +1,37 @@
+.container {
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    width : 550px;
+
+}
+
+.card {
+    float: left;
+    border: 1.5px solid #e3e3e3;
+    width: 250px;
+    overflow: hidden;
+    /* height:20px; */
+    margin: 0 5px 5px 0;
+    
+}
+
+.board .board_article {
+    display: block;
+    padding: 0px;
+    border-top: 1px solid #e3e3e3;
+    height: 40px;
+    overflow: hidden;
+}
+
+.board a {
+    overflow: hidden;
+    text-decoration: none;
+    overflow: hidden;
+    /* height: 40px; */
+
+}
+.board a h3 {
+    /* height: 10px; */
+    margin: 5px 0;
+}

@@ -1,6 +1,6 @@
-body {
+/* body {
     margin:0.5;
-}
+} */
 
 .nav-container {
     display: flex;
@@ -13,6 +13,8 @@ body {
 }
 
 .nav-item {
+    left:30%;
+
     padding: 15px;
     cursor: pointer;
 }
