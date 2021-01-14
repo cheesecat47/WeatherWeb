@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Article(){
-    return (<h3>This is article</h3>);
+const Article = () => {
+    return (<h3>This is Article page</h3>);
 }
 
 export default Article;

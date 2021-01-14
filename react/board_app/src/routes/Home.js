@@ -65,14 +65,6 @@ class Home extends React.Component {
         }
       ]
     }],
-
-    // article: [
-    // 	{
-    // 		id: 1,
-    // 		board_id: 1,
-    // 		title: "대학원생 정기권 신청 가능한가?",
-    // 		context: "밀리의 서재 구독 1년치 3명이거 끊어서하려합니다 한명남았어요 쪽지주세요~"
-    // 	}]
   };
 
 
@@ -114,10 +106,8 @@ class Home extends React.Component {
                   article={board.article}
                 />
               ))}
-            </div>
-          )}
-      </section>
-    );
+            </div>)}
+      </section>);
   }
 };
 
