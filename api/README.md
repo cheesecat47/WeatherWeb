@@ -4,7 +4,8 @@
 
 | Name | Version | Link |
 |:-:|:-:|:-:|
-|  |  | <> |
+| Go |  | <> |
+| Gin |  | <> |
 
 ---
 
@@ -18,18 +19,17 @@ $ sudo docker-compose up -d && sudo docker-compose logs -f
 
 ## API Specifications
 
-| Method | URI | Parameter | Response |
-|:-:|:-:|:-:|:-:|
-| GET | /api/ |  |  |
+Refer [this page](../API_doc.md) for more information.
 
 ---
 
 ## References
 
-<https://hub.docker.com/_/golang>
-<https://soyoung-new-challenge.tistory.com/113>
-<https://velog.io/@soosungp33/Golang으로-웹서버-만들기>
-<https://lv99.tistory.com/19>
+- <https://hub.docker.com/_/golang>
+- <https://soyoung-new-challenge.tistory.com/113>
+- <https://velog.io/@soosungp33/Golang으로-웹서버-만들기>
+- <https://lv99.tistory.com/19>
+- <http://golang.site/go/article/107-MySql-사용---쿼리>
 
 ### swagger
 - <https://victorydntmd.tistory.com/341>

@@ -6,8 +6,6 @@ import Board from './routes/Board';
 import Navigator from './components/Navigator';
 import Article from './components/Article';
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -20,3 +18,4 @@ function App() {
 }
 
 export default App;
+ 

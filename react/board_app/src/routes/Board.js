@@ -20,7 +20,7 @@ class Board extends React.Component {
         <div className="board">
           <h3>{location.state.name}</h3>
           {location.state.article.map(article => (
-            <h3><Link to = "/article/{article.id}" style={{ textDecoration: 'none'}}>제목 : {article.title}</Link>
+            <h3><Link to = {`/article/${article.article_id}`} style={{ textDecoration: 'none'}}>제목 : {article.title}</Link>
             <h6>내용:{article.context}</h6>
             </h3>
             // <p>{article.context}</p>

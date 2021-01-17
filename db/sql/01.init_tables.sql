@@ -3,7 +3,7 @@ USE webpracticedb;
 
 CREATE TABLE user (
     user_id VARCHAR(20) PRIMARY KEY,
-    user_login_id VARCHAR(20) UNIQUE,
+    user_email VARCHAR(30) UNIQUE,
     user_pw VARCHAR(20),
     user_name VARCHAR(20),
     user_role VARCHAR(20),

@@ -10,8 +10,8 @@
 |:-:|:-:|:-:|
 | Docker | 20.10.0 | <https://docs.docker.com/engine/install/> |
 | Docker-compose | 1.27.4 | <https://docs.docker.com/compose/install/> |
+| tmux & tmuxinator  (optional) |  | <https://github.com/tmuxinator/tmuxinator> |
 
-* tmux & [tmuxinator](https://github.com/tmuxinator/tmuxinator) (additional)
 
 ---
 
@@ -28,19 +28,25 @@ cd webpractice
     $ tmuxinator start project
     ```
 
-1. Else
+1. If you don't use tmux, run this.  
+
+    ```bash
+    $ sudo docker-compose up -d && sudo docker-compose logs -f
+    ```
 
 ---
 
 ## Deploy Ports
 
-| Dir | Name | Port # |
-|:-:|:-:|:-:|
-| kafka | zookeeper | 31010 |
-| kafka | kafka | 31020 |
-| nginx | nginx | 32000 |
-| dbserver | mariadb | 33010 |
-| dbserver | adminer | 33020 |
+| Dir      | Name       | Port # |
+|:--------:|:----------:|:------:|
+| kafka    | kafka_zk   | 31010  |
+| kafka    | kafka      | 31020  |
+| nginx    | nginx      | 32000  |
+| dbserver | db_maria   | 33010  |
+| dbserver | db_adminer | 33020  |
+| react    | react      | 34000  |
+| api      | api        | 35000  |
 
 ---
 

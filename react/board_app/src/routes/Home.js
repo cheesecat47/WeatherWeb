@@ -13,7 +13,7 @@ class Home extends React.Component {
     user: [{}],
     board: [{
       id: 1,
-      name: "대구캠게시판",
+      "name": "대구캠게시판",
       user_id: "안태건",
       article: [
         {
@@ -31,7 +31,7 @@ class Home extends React.Component {
     },
     {
       id: 2,
-      name: "정보게시판",
+      "name": "정보게시판",
       user_id: "한진규",
       article: [
         {
@@ -49,7 +49,7 @@ class Home extends React.Component {
     },
     {
       id: 3,
-      name: "취업게시판",
+      "name": "취업게시판",
       user_id: "신주용",
       article: [
         {
@@ -88,6 +88,7 @@ class Home extends React.Component {
   }
   render() {
     const { isLoading, user, board } = this.state;
+    console.log(board);
 
     return (
       <section className="container">
