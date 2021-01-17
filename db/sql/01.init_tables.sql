@@ -2,28 +2,30 @@
 USE webpracticedb;
 
 CREATE TABLE user (
-    id VARCHAR(20) PRIMARY KEY,
-    pw VARCHAR(20),
-    name VARCHAR(20),
-    role VARCHAR(20),
+    user_id VARCHAR(20) PRIMARY KEY,
+    user_login_id VARCHAR(20) UNIQUE,
+    user_pw VARCHAR(20),
+    user_name VARCHAR(20),
+    user_role VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP
 );
 
 CREATE TABLE article (
-    id INT PRIMARY KEY,
+    article_id INT PRIMARY KEY,
     board_id INT,
     user_id VARCHAR(20),
-    title TINYTEXT,
-    content LONGTEXT,
+    article_title TINYTEXT,
+    article_content LONGTEXT,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP
 );
 
 CREATE TABLE board (
-    id INT PRIMARY KEY,
+    board_id INT PRIMARY KEY,
+    board_name VARCHAR(20),
     user_id VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
@@ -32,9 +34,9 @@ CREATE TABLE board (
 
 CREATE TABLE token (
     user_id VARCHAR(20) PRIMARY KEY, 
-    refresh_token VARCHAR(32),
+    refresh_token VARCHAR(32) UNIQUE,
     refresh_token_expired_at TIMESTAMP,
-    fcm_token VARCHAR(32),
+    fcm_token VARCHAR(32) UNIQUE,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     deleted_at TIMESTAMP
