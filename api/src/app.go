@@ -12,7 +12,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"database/sql" 
-    _ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	
+	"routes/v1"
 )
 
 func initDB() {
@@ -20,7 +22,6 @@ func initDB() {
 	const MYSQL_ROOT_PW string = os.Getenv("MYSQL_ROOT_PASSWORD")
 	const MYSQL_DB string = os.Getenv("MYSQL_DATABASE")
 
-	'mariadb:{}@{}'
 }
 
 func Start(port string) {
@@ -34,10 +35,9 @@ func Start(port string) {
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
 
-	// https://github.com/gin-gonic/gin#grouping-routes
-	v1 := router.Group("./routes/v1") {
-
-	}
+	// https://riptutorial.com/ko/go/example/29299/gin을-사용한-restfull-프로젝트-api#undefined
+	router.Use('/v1', )
+	
 
 	if port == "" {
 		port = "8080"
