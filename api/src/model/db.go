@@ -1,21 +1,17 @@
-package app
+package model
 
 import (
 	"database/sql"
 	"errors"
 	"fmt"
 	"log"
-	"os"
 
+	"github.com/cheesecat47/webpractice/constant"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
-	pool        *sql.DB // Database connection pool.
-	mysqlDb     string  = os.Getenv("MYSQL_DATABASE")
-	mysqlHost   string  = os.Getenv("MYSQL_HOST")
-	mysqlRootPw string  = os.Getenv("MYSQL_ROOT_PASSWORD")
-	mysqlUser   string  = os.Getenv("MYSQL_USER")
+	pool *sql.DB // Database connection pool.
 )
 
 var (
@@ -36,18 +32,24 @@ func InitDB() {
 	}
 	defer pool.Close()
 	log.Println("InitDB: pool:", pool)
-
-	// err = pool.Ping()
-	// if err != nil {
-	// 	log.Fatalln(err)
-	// }
 }
 
 // ConnectDB func
 func ConnectDB() (*sql.DB, error) {
 	pool, err := sql.Open("mysql",
-		fmt.Sprintf("%s:%s@(%s)/%s", mysqlUser, mysqlRootPw, mysqlHost, mysqlDb))
+		fmt.Sprintf(
+			"%s:%s@(%s)/%s",
+			constant.MysqlUser,
+			constant.MysqlRootPw,
+			constant.MysqlHost,
+			constant.MysqlDb))
 	if err != nil {
+		fmt.Println("Database Connection Error")
+		return nil, err
+	}
+
+	if pool.Ping() != nil {
+		fmt.Println("Database Ping Fail")
 		return nil, err
 	}
 	return pool, nil

@@ -1,4 +1,4 @@
-package app
+package server
 
 import (
 	"context"
@@ -10,9 +10,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cheesecat47/webpractice/model"
 	"github.com/gin-gonic/gin"
 )
 
+// Start 서버 시작
 func Start(port string) {
 	// TODO: refactor
 	// gin.SetMode(gin.ReleaseMode)
@@ -25,7 +27,7 @@ func Start(port string) {
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
 
-	InitDB()
+	model.InitDB()
 
 	// https://riptutorial.com/ko/go/example/29299/gin을-사용한-restfull-프로젝트-api#undefined
 	// router.Use('/v1', )

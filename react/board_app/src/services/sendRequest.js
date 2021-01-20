@@ -1,8 +1,9 @@
 import axios from 'axios';
+import config from '../config';
 
 //GET axios config...
-export const getInstance = axios.create({
-  baseURL: 'http://localhost:50004',
+export const sendGet = axios.create({
+  baseURL: config.API_SERVER_URL,
   //     header:{
   //   "Authorization": token, // Bearer Token for authority
   //   "Content-Type": "application-json"
@@ -12,8 +13,8 @@ export const getInstance = axios.create({
 });
 
 //POST axios config...
-export const postInstance = axios.create({
-  baseURL: 'http://localhost:50004',
+export const sendPost = axios.create({
+  baseURL: config.API_SERVER_URL,
   //     header:{
   //   "Authorization": token, // Bearer Token for authority
   //   "Content-Type": "application-json"
@@ -28,8 +29,8 @@ export const postInstance = axios.create({
 });
 
 //DELETE axios config...
-export const deleteInstance = axios.create({
-  baseURL: 'http://localhost:50004',
+export const sendDelete = axios.create({
+  baseURL: config.API_SERVER_URL,
   //     header:{
   //   "Authorization": token, // Bearer Token for authority
   //   "Content-Type": "application-json"
@@ -39,8 +40,8 @@ export const deleteInstance = axios.create({
 });
 
 //PATCH axios config...
-export const patchInstance = axios.create({
-  baseURL: 'http://localhost:50004',
+export const sendPatch = axios.create({
+  baseURL: config.API_SERVER_URL,
   //     header:{
   //   "Authorization": token, // Bearer Token for authority
   //   "Content-Type": "application-json"

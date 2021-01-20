@@ -1,6 +1,6 @@
 version: "3.7"
 
-services: 
+services:
   # zookeeper:
   #   image: zookeeper:3.6.2
   #   container_name: kafka_zk
@@ -13,9 +13,9 @@ services:
   # kafka:
   #   image: wurstmeister/kafka:2.12-2.2.0
   #   container_name: kafka
-  #   depends_on: 
+  #   depends_on:
   #     - zookeeper
-  #   environment: 
+  #   environment:
   #     KAFKA_BROKER_ID: 0
   #     KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
   #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:31010
@@ -40,38 +40,36 @@ services:
   api:
     build: ./api
     image: golang:1.15.7
-    container_name: api
     ports:
       - 35000:8080
-    environment: 
+    environment:
       - MYSQL_DATABASE=webpracticedb
       - MYSQL_HOST=db_maria:33010
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_USER=root
     # volumes:
-    #  - 
-
-  # react:
-  #   image: nginx:1.19.6
-  #   container_name: react
+    #  -
 
   mariadb:
     image: mariadb:10.5.8
-    container_name: db_maria
     volumes:
       - maria_data:/var/lib/mysql
       - ./db/config:/etc/mysql
       - ./db/sql/:/docker-entrypoint-initdb.d/
     ports:
       - 33010:3306
-    environment: 
+    environment:
       - MYSQL_DATABASE=webpracticedb
       - MYSQL_ROOT_PASSWORD=1234
 
+  react:
+    build: ./react
+    ports:
+      - 3000:3000
+
   adminer:
     image: adminer:4.7.8
-    container_name: db_adminer
-    ports: 
+    ports:
       - 33020:8080
 
 volumes:
@@ -79,7 +77,6 @@ volumes:
   kafka_zk_datalog:
   kafka_log:
   maria_data:
-
 # https://jobc.tistory.com/213
 # https://m.blog.naver.com/wideeyed/221973877361
 # https://soyoung-new-challenge.tistory.com/111
