@@ -1,115 +1,98 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
-// import Board from '../components/MainPage';
+import React, { useState, useEffect } from 'react';
 import MainPage from '../components/MainPage';
 import '../css/MainPage.css';
-// import * as service from '../services/Api';
+import * as service from '../services/BoardApi';
+import { connect } from 'react-redux';
+import { actionCreaters } from '../store';
+
 // import Board from './Board';
 
-class Home extends React.Component {
-  state = {
-    isLoading: true,
-    user: [{}],
-    board: [{
-      id: 1,
-      "name": "대구캠게시판",
-      user_id: "안태건",
-      article: [
-        {
-          article_id: 1,
-          title:
-            "대학생 정기권 신청 가능한가asdasdadsd",
-          context: "아니 죽어도 안해주더라"
-        },
-        {
-          article_id: 2,
-          title: "대구캠 컴학 만세",
-          context: "만만세입니다"
-        }
-      ]
-    },
-    {
-      id: 2,
-      "name": "정보게시판",
-      user_id: "한진규",
-      article: [
-        {
-          article_id: 1,
-          title:
-            "정보 좀 주세요",
-          context: "정보는 없단다..."
-        },
-        {
-          article_id: 2,
-          title: "제발 좀 주시죠",
-          context: "나도 몰랑"
-        }
-      ]
-    },
-    {
-      id: 3,
-      "name": "취업게시판",
-      user_id: "신주용",
-      article: [
-        {
-          article_id: 1,
-          title:
-            "취업 시켜 주시오",
-          context: "넌 대학원 가거라"
-        },
-        {
-          article_id: 2,
-          title: "대학원 가기 싫어요",
-          context: "싫으면 몰라"
-        }
-      ]
-    }],
+function Home({ boardList, getBoardInfo, createBoard }) {
+  //어떤 일 발생하는 것 등록하고 useEffect로 => loading false 변환하기, reload값으로 data post 된거 감지..
+  const [isLoading, setLoading] = useState("true");
+  const [reload, setReload] = useState(false);
+  //submit 할 때 data...
+  const [text, setText] = useState("");
+
+  //게시판 생성 sumbit...
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setText("");
+    console.log(text);
+    const fetchData = async () => {
+      const res = await service.postBoard('/boards', text);
+      console.log(res);
+    }
+    fetchData();
+    setReload(true);
+    // createBoard(text)
+  }
+  const onChange = (e) => setText(e.target.value);
+
+  // const onClick = (e) => {
+  //   console.log("생각좀합시다...");
+  // }
+
+  const renderBoard = (list) => {
+    if (list)
+      return list;
+    else {
+      console.log("mount 하기 전..")
+      return [];
+    }
   };
 
-
-  /* api server 어떤 식으로 받아올지 정하고 state update
-    getUserInfo = asnyc () => {
-      const user= await axios.get("url");
-      this.setState({user:user})
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await service.getBoardList('/boards');
+      console.log(res.data);
+      // setBoardList(res.data);
+      getBoardInfo(res.data);
     }
-    getBoardInfo = asnyc () => {
-      const board= await axios.get("url");
-      this.setState({board})
-    }
-    getArticleInfo = asnyc () => {
-      const article= await axios.get("url");
-      this.setState({article})
-    }
-  */
-  componentDidMount() {
-    // console.log(this.state)
-    this.setState({ isLoading: false })
-  }
-  render() {
-    const { isLoading, user, board } = this.state;
-    console.log(board);
+    fetchData();
+    setLoading(false);
+    setReload(false);
+  }, [reload]);
 
-    return (
-      <section className="container">
-        {isLoading ? (
-          <div className="loader">
-            <span className="loader_text">"Loading"</span>
-          </div>
-        ) : (
-            <div className="boards">
-              {board.map(board => (
-                <MainPage
-                  key={board.id}
-                  id={board.id}
-                  name={board.name}
-                  user_id={board.user_id}
-                  article={board.article}
-                />
-              ))}
-            </div>)}
-      </section>);
-  }
-};
+  return (
+    <section className="container">
+      {isLoading ? (
+        <div className="loader">
+          <span className="loader_text">"Loading"</span>
+        </div>
+      ) : (
+          <div className="boards">
+            <h2>게시판 리스트</h2>
+            <form onSubmit={onSubmit}>
+              <input type="text" value={text} onChange={onChange} />
+              <button>게시판 생성</button>
+            </form>
+            {/* <button onClick={onClick}>게시판 삭제</button> */}
+            {renderBoard(boardList).map(board => (
+              <MainPage
+                key={board.boardId}
+                boardName={board.boardName}
+                boardId={board.boardId} />
+            ))}
+          </div>)}
+    </section>
+  );
+}
 
-export default Home;
+function mapStateToProps(state) {
+  console.log(state);
+  return { boardList: state.boardReducer };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getBoardInfo: (data) => {
+      dispatch(actionCreaters.getContent(data))
+    }, createBoard: (data) => {
+      dispatch(actionCreaters.postContent(data))
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
