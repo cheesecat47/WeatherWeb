@@ -21,11 +21,10 @@ services:
       - 33010:3306
 
   react:
+    command: npm start
     volumes:
       - ./react/board_app:/www
       - react_node_modules:/www/node_modules
-    command:
-      - bash -c "npm start"
 
 volumes:
   maria_data:
