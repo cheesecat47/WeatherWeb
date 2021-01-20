@@ -2,17 +2,20 @@
 
 ## Environment
 
-| Name | Version | Link |
+| Name | Version | Remarks |
 |:-:|:-:|:-:|
-| Go |  | <> |
-| Gin |  | <> |
+| Go | 1.15.7 | Docker version |
+| Gin | 1.6.3 | <https://github.com/gin-gonic/gin> |
 
 ---
 
 ## How to Use
 
 ```bash
-$ sudo docker-compose up -d && sudo docker-compose logs -f
+$ docker-compose up -d && docker-compose logs -f
+
+# Go to http://[your domain]:35000
+# You can get JSON: {"message":"Hello, this is go api server."}
 ```
 
 ---

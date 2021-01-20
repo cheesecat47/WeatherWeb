@@ -1,54 +1,72 @@
 version: "3.7"
 
 services: 
-  zookeeper:
-    image: zookeeper:3.6.2
-    container_name: kafka_zk
-    volumes:
-      - kafka_zk_data:/data
-      - kafka_zk_datalog:/datalog
-    ports:
-      - 31010:2181
+  # zookeeper:
+  #   image: zookeeper:3.6.2
+  #   container_name: kafka_zk
+  #   volumes:
+  #     - kafka_zk_data:/data
+  #     - kafka_zk_datalog:/datalog
+  #   ports:
+  #     - 31010:2181
 
-  kafka:
-    image: wurstmeister/kafka:2.12-2.2.0
-    container_name: kafka
-    depends_on: 
-      - zookeeper
-    environment: 
-      KAFKA_BROKER_ID: 0
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:31010
-      KAFKA_CREATE_TOPICS: "test:1:1"
-    ports:
-      - 31020:9092
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - kafka_log:/opt/kafka/logs
+  # kafka:
+  #   image: wurstmeister/kafka:2.12-2.2.0
+  #   container_name: kafka
+  #   depends_on: 
+  #     - zookeeper
+  #   environment: 
+  #     KAFKA_BROKER_ID: 0
+  #     KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+  #     KAFKA_ZOOKEEPER_CONNECT: zookeeper:31010
+  #     KAFKA_CREATE_TOPICS: "test:1:1"
+  #   ports:
+  #     - 31020:9092
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - kafka_log:/opt/kafka/logs
 
-  nginx:
-    # build:
-    #   context: ./nginx
-    image: nginx:1.19.6
-    container_name: nginx
-    volumes:
-      - ./nginx/content:/usr/share/nginx/html:ro
-      - ./nginx/config/nginx:/etc/nginx
-    ports:
-      - 32000:80
+  # nginx:
+  #   # build:
+  #   #   context: ./nginx
+  #   image: nginx:1.19.6
+  #   container_name: nginx
+  #   volumes:
+  #     - ./nginx/content:/usr/share/nginx/html:ro
+  #     - ./nginx/config/nginx:/etc/nginx
+  #   ports:
+  #     - 32000:80
 
   api:
     build: ./api
-    image: golang:1.15.6
+    image: golang:1.15.7
     container_name: api
     ports:
       - 35000:8080
+    environment: 
+      - MYSQL_DATABASE=webpracticedb
+      - MYSQL_HOST=db_maria:33010
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER=root
     # volumes:
     #  - 
 
-  react:
-    image: nginx:1.19.6
-    container_name: react
+  # react:
+  #   image: nginx:1.19.6
+  #   container_name: react
+
+  mariadb:
+    image: mariadb:10.5.8
+    container_name: db_maria
+    volumes:
+      - maria_data:/var/lib/mysql
+      - ./db/config:/etc/mysql
+      - ./db/sql/:/docker-entrypoint-initdb.d/
+    ports:
+      - 33010:3306
+    environment: 
+      - MYSQL_DATABASE=webpracticedb
+      - MYSQL_ROOT_PASSWORD=1234
 
   adminer:
     image: adminer:4.7.8
@@ -60,6 +78,7 @@ volumes:
   kafka_zk_data:
   kafka_zk_datalog:
   kafka_log:
+  maria_data:
 
 # https://jobc.tistory.com/213
 # https://m.blog.naver.com/wideeyed/221973877361

@@ -11,23 +11,13 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"database/sql" 
-	_ "github.com/go-sql-driver/mysql"
-	
-	"routes/v1"
 )
-
-func initDB() {
-	// http://golang.site/go/article/107-MySql-사용---쿼리
-	const MYSQL_ROOT_PW string = os.Getenv("MYSQL_ROOT_PASSWORD")
-	const MYSQL_DB string = os.Getenv("MYSQL_DATABASE")
-
-}
 
 func Start(port string) {
 	// TODO: refactor
 	// gin.SetMode(gin.ReleaseMode)
 	gopath := os.Getenv("GOPATH")
+	log.Printf("gopath: %s", gopath)
 	// https://gin-gonic.com/ko-kr/docs/examples/write-log/
 	// https://github.com/gin-gonic/gin#how-to-write-log-file
 	// https://jeonghwan-kim.github.io/dev/2019/01/14/go-time.html
@@ -35,9 +25,15 @@ func Start(port string) {
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
 
+	InitDB()
+
 	// https://riptutorial.com/ko/go/example/29299/gin을-사용한-restfull-프로젝트-api#undefined
-	router.Use('/v1', )
-	
+	// router.Use('/v1', )
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Hello, this is go api server.",
+		})
+	})
 
 	if port == "" {
 		port = "8080"
