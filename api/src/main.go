@@ -1,9 +1,10 @@
 package main
 
-import {
-	app
-}
+import (
+	"app"
+	"os"
+)
 
 func main() {
-	app.Start(os.Getenv("port"));
+	app.Start(os.Getenv("port"))
 }

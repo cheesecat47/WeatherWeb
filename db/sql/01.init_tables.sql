@@ -42,7 +42,7 @@ CREATE TABLE token (
     deleted_at TIMESTAMP
 );
 
-ALTER TABLE article add foreign key (article_user_id) references user(id);
-ALTER TABLE article add foreign key (article_board_id) references board(id);
-ALTER TABLE board add foreign key (board_user_id) references user(id);
-ALTER TABLE token add foreign key (token_user_id) references user(id);
+ALTER TABLE article add foreign key (user_id) references user(user_id);
+ALTER TABLE article add foreign key (board_id) references board(board_id);
+ALTER TABLE board add foreign key (user_id) references user(user_id);
+ALTER TABLE token add foreign key (user_id) references user(user_id);
