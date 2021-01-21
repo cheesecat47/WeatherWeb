@@ -1,4 +1,4 @@
-module github.com/cheesecat47/webpractice
+module webpractice
 
 go 1.15
 

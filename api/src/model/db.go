@@ -5,14 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/cheesecat47/webpractice/constant"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var (
-	pool *sql.DB // Database connection pool.
-)
+// var (
+// 	pool *sql.DB // Database connection pool.
+// )
 
 var (
 	errorCantConnectDB = errors.New("Can't connect DB")
@@ -21,38 +22,59 @@ var (
 
 // InitDB func
 func InitDB() {
-	pool, err := ConnectDB()
+	db, err := ConnectDB()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	if pool != nil {
-		pool.SetConnMaxLifetime(0)
-		pool.SetMaxIdleConns(3)
-		pool.SetMaxOpenConns(3)
+	err = db.Ping()
+	if err != nil {
+		log.Fatalln(err)
 	}
-	defer pool.Close()
-	log.Println("InitDB: pool:", pool)
+	if db != nil {
+		db.SetConnMaxLifetime(time.Minute * 3)
+		db.SetMaxIdleConns(3)
+		db.SetMaxOpenConns(3)
+		log.Println("InitDB: Set up db")
+	}
+	defer db.Close()
+	log.Println("InitDB: db:", db)
+
+	// for testing connection
+	var (
+		id   string
+		name string
+	)
+	rows, err := db.Query("select user_id, user_name from user where user_id = ?", "jy")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&id, &name)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		log.Println(id, name)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
 
 // ConnectDB func
 func ConnectDB() (*sql.DB, error) {
-	pool, err := sql.Open("mysql",
-		fmt.Sprintf(
-			"%s:%s@(%s)/%s",
+	db, err := sql.Open("mysql",
+		fmt.Sprintf("%s:%s@(%s)/%s",
 			constant.MysqlUser,
 			constant.MysqlRootPw,
 			constant.MysqlHost,
 			constant.MysqlDb))
 	if err != nil {
-		fmt.Println("Database Connection Error")
 		return nil, err
 	}
-
-	if pool.Ping() != nil {
-		fmt.Println("Database Ping Fail")
-		return nil, err
-	}
-	return pool, nil
+	return db, nil
 }
 
 // http://golang.site/go/article/107-MySql-사용---쿼리
