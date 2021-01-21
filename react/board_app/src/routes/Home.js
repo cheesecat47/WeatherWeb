@@ -23,7 +23,8 @@ function Home({ boardList, getBoardInfo, createBoard }) {
       const res = await service.postBoard('/boards', text);
       console.log(res);
     }
-    fetchData();
+    //api server 동작하면 fetchData()주석 해제!!!
+    // fetchData();
     setReload(true);
     // createBoard(text)
   }
@@ -49,7 +50,8 @@ function Home({ boardList, getBoardInfo, createBoard }) {
       // setBoardList(res.data);
       getBoardInfo(res.data);
     }
-    fetchData();
+    //api server 동작하면 fetchData()주석 해제!!!
+    // fetchData();
     setLoading(false);
     setReload(false);
   }, [reload]);
