@@ -1,10 +1,10 @@
 package main
 
 import (
-	"app"
-	"os"
+	"github.com/cheesecat47/webpractice/constant"
+	"github.com/cheesecat47/webpractice/server"
 )
 
 func main() {
-	app.Start(os.Getenv("port"))
+	server.Start(constant.ListeningPort)
 }
