@@ -10,7 +10,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cheesecat47/webpractice/api/model"
+	"github.com/cheesecat47/webpractice/model"
 	"github.com/gin-gonic/gin"
 )
 
