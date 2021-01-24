@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/cheesecat47/webpractice/constant"
+	"github.com/cheesecat47/webpractice/api/constant"
 	_ "github.com/go-sql-driver/mysql"
 )
 
