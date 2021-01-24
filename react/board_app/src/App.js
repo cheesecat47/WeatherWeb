@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Navigator />
       <Route path="/" exact={true} component={Home} />
-      <Route path="/board/:id" component={Board} />
+      <Route path="/board/:id" exact={true} component={Board} />
       <Route path="/board/:id/article/:aid" component={Article} />
     </BrowserRouter>
   );
