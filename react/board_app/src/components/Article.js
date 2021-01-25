@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { actionCreaters } from '../store';
 import { connect } from "react-redux";
 
-function Article() {
+function Article({boardId}) {
+  console.log(boardId);
 
   // const btnWrite = (e) =>{
   //   e.preventDefault();
@@ -16,16 +16,4 @@ function Article() {
     </div>);
 }
 
-function mapStateToprops(state) {
-  console.log(state);
-  return { articleContent: state };
-  // console.log(state);
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    writeArticle: (input) => dispatch(actionCreaters.addContent(input))
-  };
-}
-export default connect(mapStateToprops, mapDispatchToProps)(Article);
-// connect (mapStateToprops,mapDispatchToProps)(Write);
+export default Article;

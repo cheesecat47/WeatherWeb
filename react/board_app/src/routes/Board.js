@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import BoardDetail from '../components/BoardDetail';
 import WriteArticle from '../components/WriteArticle';
 import '../css/Board.css';
 
@@ -7,10 +8,10 @@ function Board({ location, history, match }) {
  
   useEffect(() => {
     if (location.state === undefined) {
+      history.push('/');
       //match.params로 id값 받아와서 데이터 요청해야할듯...
       // console.log(match.params);
       //url로 접근하는 사용자 케이스 고려
-      history.push('/');
     }
   }, [])
 
@@ -29,7 +30,7 @@ function Board({ location, history, match }) {
             {/* article axios.get으로 데이터 받아오기... */}
             <Link to={{
               pathname: `/board/${boardId}/article/${articleId}`
-            }}>게시글 1</Link>
+            }}><BoardDetail boardId={boardId}/></Link>
           </div>
         </div>
       </div>

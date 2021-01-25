@@ -3,9 +3,8 @@ import MainPage from '../components/MainPage';
 import '../css/MainPage.css';
 import * as service from '../services/BoardApi';
 import { connect } from 'react-redux';
-import { actionCreaters } from '../store';
 
-function Home({ boardList, getBoardInfo, createBoard }) {
+function Home({ boardList }) {
   //어떤 일 발생하는 것 등록하고 useEffect로 => loading false 변환하기, reload값으로 data post 된거 감지..
   const [isLoading, setLoading] = useState("true");
   const [reload, setReload] = useState(false);
@@ -15,23 +14,13 @@ function Home({ boardList, getBoardInfo, createBoard }) {
   //게시판 생성 sumbit...
   const onSubmit = (e) => {
     e.preventDefault();
+    //api server 동작하면 주석 해제!!!
+    service.postBoard('/board', newBoard);
     setNewBoard("");
-    // console.log(text);
-    const fetchData = async () => {
-      const res = await service.postBoard('/board', newBoard);
-      console.log(res);
-    }
-    //api server 동작하면 fetchData()주석 해제!!!
-    fetchData();
     setReload(true);
-    // createBoard(text)
+    console.log(boardList);
   }
   const onChange = (e) => setNewBoard(e.target.value);
-
-  // const onClick = (e) => {
-  //   console.log("생각좀합시다...");
-  // }
-
   const renderBoard = (list) => {
     if (list)
       return list;
@@ -41,15 +30,10 @@ function Home({ boardList, getBoardInfo, createBoard }) {
     }
   };
 
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await service.getBoardList('/board');
-      // console.log(res.data);
-      // setBoardList(res.data);
-      getBoardInfo(res.data);
-    }
-    //api server 동작하면 fetchData()주석 해제!!!
-    fetchData();
+    //api server 동작하면 주석 해제!!!    
+    service.getBoardList('/board');
     setLoading(false);
     setReload(false);
   }, [reload]);
@@ -81,18 +65,20 @@ function Home({ boardList, getBoardInfo, createBoard }) {
 
 function mapStateToProps(state) {
   // console.log(state);
-  return { boardList: state.boardReducer };
+  return { boardList: state.boardReducer.data };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getBoardInfo: (data) => {
-      dispatch(actionCreaters.getContent(data))
-    }, createBoard: (data) => {
-      dispatch(actionCreaters.postContent(data))
-    }
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     getBoardInfo: (data) => {
+//       dispatch(actionCreaters.getContent(data))
+//     }, createBoard: (data) => {
+//       dispatch(actionCreaters.postContent(data))
+//     }
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
