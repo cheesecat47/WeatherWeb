@@ -22,7 +22,7 @@ function Home({ boardList, getBoardInfo, createBoard }) {
       console.log(res);
     }
     //api server 동작하면 fetchData()주석 해제!!!
-    fetchData();
+    // fetchData();
     setReload(true);
     // createBoard(text)
   }
@@ -49,7 +49,7 @@ function Home({ boardList, getBoardInfo, createBoard }) {
       getBoardInfo(res.data);
     }
     //api server 동작하면 fetchData()주석 해제!!!
-    fetchData();
+    // fetchData();
     setLoading(false);
     setReload(false);
   }, [reload]);
