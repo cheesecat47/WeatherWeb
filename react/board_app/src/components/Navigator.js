@@ -6,7 +6,7 @@ import '../css/Navigator.css';
 //게시판 id외에 넘어올 props 필요...?
 
 function Navigator({ location }) {
-  console.log(location);
+  // console.log(location);
   return (
     <nav>
       <ul className="nav-container">

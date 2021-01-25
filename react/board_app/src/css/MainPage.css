@@ -16,7 +16,7 @@
     
 }
 
-.card .board .board_article a{
+.board_article {
     display: block;
     padding: 0px;
     border-top: 1px solid #e3e3e3;

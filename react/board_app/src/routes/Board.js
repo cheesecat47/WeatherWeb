@@ -1,41 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
+import WriteArticle from '../components/WriteArticle';
+import '../css/Board.css';
 
-class Board extends React.Component {
-  
-
-  componentDidMount() {
-    const { location, history } = this.props;
+function Board({ location, history, match }) {
+ 
+  useEffect(() => {
     if (location.state === undefined) {
-      history.push("/");
+      //match.params로 id값 받아와서 데이터 요청해야할듯...
+      // console.log(match.params);
+      //url로 접근하는 사용자 케이스 고려
+      history.push('/');
     }
-  }
+  }, [])
 
-  render() {
-    console.log(this.props);
-    const { location } = this.props;
-    if (location.state) {
-      return (
-        <div className="board">
-          <h3>{location.state.name}</h3>
-          {location.state.article.map(article => (
-            <h3><Link to = {`/article/${article.article_id}`} style={{ textDecoration: 'none'}}>제목 : {article.title}</Link>
-            <h6>내용:{article.context}</h6>
-            </h3>
-            // <p>{article.context}</p>
-          ))}
-          {/* <p>{location.state.article.map(article => (
-            article.context
-          ))}</p> */}
+  if (location.state) {
+    const { boardName, boardId } = location.state;
+    const articleId = 1;
 
+    return (
+      <div className="container">
+        <div className="board_name">
+          {boardName}
         </div>
-      );
-    }
-    else {
-      return null;
-    }
+        <WriteArticle />
+        <div className="articles">
+          <div className="article">
+            {/* article axios.get으로 데이터 받아오기... */}
+            <Link to={{
+              pathname: `/board/${boardId}/article/${articleId}`
+            }}>게시글 1</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  //여기 else 부분 match 사용??처리를 생각해야겠음...
+  else {
+    return null;
   }
 }
-
 export default Board;
