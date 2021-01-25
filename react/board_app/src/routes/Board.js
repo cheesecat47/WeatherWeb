@@ -9,6 +9,7 @@ function Board({ location, history, match }) {
     if (location.state === undefined) {
       //match.params로 id값 받아와서 데이터 요청해야할듯...
       // console.log(match.params);
+      //url로 접근하는 사용자 케이스 고려
       history.push('/');
     }
   }, [])
@@ -34,7 +35,7 @@ function Board({ location, history, match }) {
       </div>
     );
   }
-  //여기 처리를 생각해야겠음...
+  //여기 else 부분 match 사용??처리를 생각해야겠음...
   else {
     return null;
   }

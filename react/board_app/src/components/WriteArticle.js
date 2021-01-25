@@ -9,7 +9,7 @@ function WriteArticle() {
   const onSubmit = (e) => {
     e.preventDefault();
     //여기에서 action 보내서 post 요청하는 logic 필요... 
-    
+    console.log(title,context);
     //글쓰기 창 접기...
     if (title || context) {
       detailEle.removeAttribute("open")
