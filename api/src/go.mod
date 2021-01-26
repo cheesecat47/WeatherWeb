@@ -1,4 +1,4 @@
-module github.com/cheesecat47/webpractice/
+module github.com/cheesecat47/webpractice/api
 
 go 1.15
 
