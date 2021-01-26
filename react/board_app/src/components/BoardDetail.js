@@ -1,26 +1,27 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as services from '../services/ArticleApi';
+import {Link} from 'react-router-dom';
 
 function BoardDetail({ ownProps, articleList }) {
   const { boardId } = ownProps;
   useEffect(() => {
-    // services.getArticleList(`/board/${boardId}/article`);
-    services.getArticleList(`/board/${boardId}`)
-    // console.log(articleList);
+    services.getArticleList(`/article?boardId=${boardId}`);
   }, []);
 
   return (
     <div>
-      
-        <p>{articleList.createdAt}</p>
+        {articleList.map(article =>(
+          <Link to={{
+            pathname: `/board/${boardId}/article/${article.articleId}`
+          }}><p key={article.id}>
+          {article.articleTitle}</p></Link>
+        ))}
     </div>
   );
-
 }
 
 function mapStateToProps(state, ownProps) {
-  // console.log(state, ownProps);
   return {
     articleList: state.articleReducer.data,
     ownProps

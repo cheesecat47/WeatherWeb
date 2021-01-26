@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 
 function Article({boardId}) {
   console.log(boardId);
-
-  // const btnWrite = (e) =>{
-  //   e.preventDefault();
-  //   return <Write/>
-  // }
+  
  return (
     <div>
       <h1>Article</h1>

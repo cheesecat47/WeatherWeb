@@ -11,29 +11,20 @@ function Home({ boardList }) {
   //submit 할 때 data...
   const [newBoard, setNewBoard] = useState("");
 
-  //게시판 생성 sumbit...
+  //게시판 생성 submit...
   const onSubmit = (e) => {
     e.preventDefault();
     //api server 동작하면 주석 해제!!!
-    service.postBoard('/board', newBoard);
+    // service.postBoard('/board', newBoard);
     setNewBoard("");
     setReload(true);
-    console.log(boardList);
   }
   const onChange = (e) => setNewBoard(e.target.value);
-  const renderBoard = (list) => {
-    if (list)
-      return list;
-    else {
-      console.log("mount 하기 전..")
-      return [];
-    }
-  };
-
 
   useEffect(() => {
     //api server 동작하면 주석 해제!!!    
-    service.getBoardList('/board');
+    // service.getBoardList('/board');
+    // console.log(boardList);
     setLoading(false);
     setReload(false);
   }, [reload]);
@@ -63,8 +54,19 @@ function Home({ boardList }) {
   );
 }
 
+const renderBoard = (list) => {
+  if (list) {
+    // console.log(list);
+    return list;
+  }
+  else {
+    console.log("data 받기 전...")
+    return [];
+  }
+};
+
 function mapStateToProps(state) {
-  // console.log(state);
+  // console.log(state.boardReducer);
   return { boardList: state.boardReducer.data };
 }
 
@@ -79,6 +81,4 @@ function mapStateToProps(state) {
 // }
 
 export default connect(mapStateToProps)(Home);
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

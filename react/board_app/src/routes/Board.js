@@ -9,6 +9,7 @@ function Board({ location, history, match }) {
   useEffect(() => {
     if (location.state === undefined) {
       history.push('/');
+      // console.log(match.params);
       //match.params로 id값 받아와서 데이터 요청해야할듯...
       // console.log(match.params);
       //url로 접근하는 사용자 케이스 고려
@@ -28,9 +29,7 @@ function Board({ location, history, match }) {
         <div className="articles">
           <div className="article">
             {/* article axios.get으로 데이터 받아오기... */}
-            <Link to={{
-              pathname: `/board/${boardId}/article/${articleId}`
-            }}><BoardDetail boardId={boardId}/></Link>
+            <BoardDetail boardId={boardId}/>
           </div>
         </div>
       </div>
