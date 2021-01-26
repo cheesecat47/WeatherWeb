@@ -4,8 +4,10 @@ COPY ./src /go/src
 
 WORKDIR /go/src/
 
-RUN go get github.com/gin-gonic/gin && \
-    go get github.com/go-sql-driver/mysql
+RUN go get -u github.com/gin-gonic/gin && \
+    go get -u github.com/go-sql-driver/mysql && \
+    go get -u gorm.io/gorm && \
+    go get -u gorm.io/driver/mysql
 
 RUN go build
 

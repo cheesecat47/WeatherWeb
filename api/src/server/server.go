@@ -27,7 +27,7 @@ func Start(port string) {
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
 
-	model.InitDB()
+	go model.InitDB()
 
 	// https://riptutorial.com/ko/go/example/29299/gin을-사용한-restfull-프로젝트-api#undefined
 	// router.Use('/v1', )
