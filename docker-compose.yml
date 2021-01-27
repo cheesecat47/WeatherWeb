@@ -44,6 +44,7 @@ services:
     image: golang:1.15.7
     ports:
       - 35000:8080
+    depends_on: mariadb
     environment:
       - MYSQL_DATABASE=webpracticedb
       - MYSQL_HOST=webpractice_mariadb_1:3306
