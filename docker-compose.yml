@@ -63,17 +63,17 @@ services:
       - MYSQL_DATABASE=webpracticedb
       - MYSQL_ROOT_PASSWORD=1234
 
+  adminer:
+    image: adminer:4.7.8
+    ports:
+      - 33020:8080
+  
   react:
     build:
       context: .
       dockerfile: ./react.Dockerfile
     ports:
       - 34000:3000
-
-  adminer:
-    image: adminer:4.7.8
-    ports:
-      - 33020:8080
 
 volumes:
   kafka_zk_data:
