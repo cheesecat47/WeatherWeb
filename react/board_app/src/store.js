@@ -33,7 +33,7 @@ const boardReducer = (state = [], action) => {
             // console.log(action.boardList);
             // const stateObj = [action.boardList, ...state];
             // console.log(a);
-            console.log(action);
+            // console.log(action);
             return action.data;
 
         case POST_BOARD:
@@ -56,7 +56,7 @@ const articleReducer = (state = [], action) => {
             return [2];
 
         case "POST1":
-            console.log("action post에 왔다.", state, action.input)
+            // console.log("action post에 왔다.", state, action.input)
             // const a = [{ input: action.input }, ...state];
             // console.log(a);
             return [{ input: action.input }, ...state];
@@ -71,6 +71,7 @@ const rootReducer = combineReducers({
 })
 const store = createStore(rootReducer);
 
+//store.subscribe??
 export const actionCreaters = {
     postContent,
     getContent

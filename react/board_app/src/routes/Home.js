@@ -5,22 +5,20 @@ import * as service from '../services/BoardApi';
 import { connect } from 'react-redux';
 import { actionCreaters } from '../store';
 
-// import Board from './Board';
-
 function Home({ boardList, getBoardInfo, createBoard }) {
   //어떤 일 발생하는 것 등록하고 useEffect로 => loading false 변환하기, reload값으로 data post 된거 감지..
   const [isLoading, setLoading] = useState("true");
   const [reload, setReload] = useState(false);
   //submit 할 때 data...
-  const [text, setText] = useState("");
+  const [newBoard, setNewBoard] = useState("");
 
   //게시판 생성 sumbit...
   const onSubmit = (e) => {
     e.preventDefault();
-    setText("");
-    console.log(text);
+    setNewBoard("");
+    // console.log(text);
     const fetchData = async () => {
-      const res = await service.postBoard('/boards', text);
+      const res = await service.postBoard('/board', newBoard);
       console.log(res);
     }
     //api server 동작하면 fetchData()주석 해제!!!
@@ -28,7 +26,7 @@ function Home({ boardList, getBoardInfo, createBoard }) {
     setReload(true);
     // createBoard(text)
   }
-  const onChange = (e) => setText(e.target.value);
+  const onChange = (e) => setNewBoard(e.target.value);
 
   // const onClick = (e) => {
   //   console.log("생각좀합시다...");
@@ -45,8 +43,8 @@ function Home({ boardList, getBoardInfo, createBoard }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await service.getBoardList('/boards');
-      console.log(res.data);
+      const res = await service.getBoardList('/board');
+      // console.log(res.data);
       // setBoardList(res.data);
       getBoardInfo(res.data);
     }
@@ -66,7 +64,7 @@ function Home({ boardList, getBoardInfo, createBoard }) {
           <div className="boards">
             <h2>게시판 리스트</h2>
             <form onSubmit={onSubmit}>
-              <input type="text" value={text} onChange={onChange} />
+              <input type="text" value={newBoard} onChange={onChange} />
               <button>게시판 생성</button>
             </form>
             {/* <button onClick={onClick}>게시판 삭제</button> */}
@@ -82,7 +80,7 @@ function Home({ boardList, getBoardInfo, createBoard }) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  // console.log(state);
   return { boardList: state.boardReducer };
 }
 

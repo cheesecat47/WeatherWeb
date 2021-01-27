@@ -4,35 +4,24 @@ import { connect } from 'react-redux';
 import * as service from '../services/BoardApi';
 import { actionCreaters } from '../store';
 
-//게시판 목록 조회
+//mainpage => 게시판 목록 보여주기
 
-function MainPage({ boardName, boardId}) {
-  
+function MainPage({ boardName, boardId }) {
+
   return (
     <div className="card" >
       <div className="board">
-        <h3>Name:{boardName}
-          {/* {renderBoard(boardList)} */}
-        </h3>
-        <h4>Id:{boardId}</h4>
-        
-        {/* {list[0].map(list => {
-          <h3>{list.name}</h3>
-        })} */}
-        {/* {boardList.map(board => board.name)} */}
-        {/* <Link to={{
-          pathname: `/board/${id}`,
+        <Link to={{
+          pathname: `/board/${boardId}`,
           state: {
-            id: 
+            boardName,
+            boardId
           }
-          
         }}>
-          <h3>{name}</h3></Link>
-        <div className="board_article">{ }
-            <Link to={{
-              pathname: `/article/${article.article_id}`,
-            }}> <p>{article.title}</p></Link> */}
-
+          <h3>Name:{boardName}
+          </h3>
+        </Link>
+        <h4>Id:{boardId}</h4>
       </div>
     </div>
   );
@@ -42,11 +31,11 @@ function MainPage({ boardName, boardId}) {
 //   console.log(state);
 //   return { boardList: state };
 // }
-function mapDispatchToProps(dispatch) {
-  return {
-    createBoard: (data) => {
-      dispatch(actionCreaters.postContent(data))
-    }
-  };
-}
-export default connect(null, mapDispatchToProps)(MainPage);
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     createBoard: (data) => {
+//       dispatch(actionCreaters.postContent(data))
+//     }
+//   };
+// }
+export default MainPage;
