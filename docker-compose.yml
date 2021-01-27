@@ -44,12 +44,14 @@ services:
     image: golang:1.15.7
     ports:
       - 35000:8080
+    depends_on: 
+      - mariadb
     environment:
       - MYSQL_DATABASE=webpracticedb
       - MYSQL_HOST=webpractice_mariadb_1:3306
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_USER=root
-    command: bash -c "./wait-for-it.sh -h mariadb -p 3306 -t 10 -- /go/src/webpractice"
+    command: bash -c "./wait-for-it.sh -h mariadb -p 3306 -t 0 -- /go/src/webpractice"
 
   mariadb:
     image: mariadb:10.5.8
