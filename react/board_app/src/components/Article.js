@@ -16,30 +16,6 @@ function Article() {
     </div>);
 }
 
-// function Write({articleContent,writeArticle}) {
-//   const [input, setInput] = useState("");
-
-//   function onSubmit(e) {
-//     e.preventDefault();
-//     setInput("");
-//     writeArticle(input);
-//     // dispatch(addToDo(text));
-//   }
-//   const onChange = (e) => { setInput(e.target.value); }
-
-//   return (
-//     <div>
-//       <h2>글 작성....</h2>
-//       <form onSubmit={onSubmit}>
-//         <input type="text" value={input} onChange={onChange}/>
-//       <button>작성</button>
-//       </form>
-//       <button>취소</button>
-//     </div>
-//   )
-
-// }
-
 function mapStateToprops(state) {
   console.log(state);
   return { articleContent: state };

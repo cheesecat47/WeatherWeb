@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/cheesecat47/webpractice/constant"
-	"github.com/cheesecat47/webpractice/server"
+	"github.com/cheesecat47/webpractice/api/constant"
+	"github.com/cheesecat47/webpractice/api/server"
 )
 
 func main() {

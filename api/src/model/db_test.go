@@ -8,14 +8,31 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+var (
+	dbuser string = "root"
+	dbpw   string = "1234"
+	dbhost string = "localhost:33010"
+	dbname string = "webpracticedb"
+)
+
 func TestDBConnection(t *testing.T) {
-	db, err := ConnectDB("root", "1234", "localhost:33010", "webpracticedb")
+	// db, err := ConnectDB(
+	// 	constant.MysqlUser,
+	// 	constant.MysqlRootPw,
+	// 	constant.MysqlHost,
+	// 	constant.MysqlDb)
+	db, err := ConnectDB(dbuser, dbpw, dbhost, dbname)
 	assert.EqualValues(t, "*gorm.DB", fmt.Sprintf("%T", db), "TestDBConnection: DB type err")
 	assert.Equal(t, nil, err, fmt.Errorf("TestDBConnection: Error: %v", err))
 }
 
 func TestCreateUser(t *testing.T) {
-	db, _ := ConnectDB("root", "1234", "localhost:33010", "webpracticedb")
+	// db, _ := ConnectDB(
+	// 	constant.MysqlUser,
+	// 	constant.MysqlRootPw,
+	// 	constant.MysqlHost,
+	// 	constant.MysqlDb)
+	db, _ := ConnectDB(dbuser, dbpw, dbhost, dbname)
 
 	user := User{
 		UserID:    "pororo",
@@ -28,7 +45,13 @@ func TestCreateUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	db, _ := ConnectDB("root", "1234", "localhost:33010", "webpracticedb")
+	// db, _ := ConnectDB(
+	// 	constant.MysqlUser,
+	// 	constant.MysqlRootPw,
+	// 	constant.MysqlHost,
+	// 	constant.MysqlDb)
+	db, _ := ConnectDB(dbuser, dbpw, dbhost, dbname)
+
 	var user User
 
 	err := db.Table("user").Where("user_name = ?", "pororo").Take(&user)
@@ -38,7 +61,13 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestUpdateUser(t *testing.T) {
-	db, _ := ConnectDB("root", "1234", "localhost:33010", "webpracticedb")
+	// db, _ := ConnectDB(
+	// 	constant.MysqlUser,
+	// 	constant.MysqlRootPw,
+	// 	constant.MysqlHost,
+	// 	constant.MysqlDb)
+	db, _ := ConnectDB(dbuser, dbpw, dbhost, dbname)
+
 	var user User
 
 	err := db.Table("user").Where("user_name = ?", "pororo").Take(&user).Update("UserPW", "modifiedPW")
@@ -48,7 +77,12 @@ func TestUpdateUser(t *testing.T) {
 }
 
 func TestDeleteUser(t *testing.T) {
-	db, _ := ConnectDB("root", "1234", "localhost:33010", "webpracticedb")
+	// db, _ := ConnectDB(
+	// 	constant.MysqlUser,
+	// 	constant.MysqlRootPw,
+	// 	constant.MysqlHost,
+	// 	constant.MysqlDb)
+	db, _ := ConnectDB(dbuser, dbpw, dbhost, dbname)
 
 	err := db.Table("user").Where("user_name = ?", "pororo").Delete(&User{})
 	assert.Equal(t, nil, err.Error, fmt.Errorf("TestDeleteUser: Error: %v", err.Error))

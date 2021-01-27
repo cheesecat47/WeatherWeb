@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cheesecat47/webpractice/constant"
+	"github.com/cheesecat47/webpractice/api/constant"
 	_ "github.com/go-sql-driver/mysql"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

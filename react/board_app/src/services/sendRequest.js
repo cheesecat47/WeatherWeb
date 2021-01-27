@@ -19,11 +19,11 @@ export const sendPost = axios.create({
   //   "Authorization": token, // Bearer Token for authority
   //   "Content-Type": "application-json"
   // }
-  data: {
-    "boardId": "9",
-    "boardName": null,
-    "createdAt": null
-  },
+  // data: {
+  //   "boardId": "9",
+  //   "boardName": null,
+  //   "createdAt": null
+  // },
   method: "post",
   timeout: 1000,
 });
