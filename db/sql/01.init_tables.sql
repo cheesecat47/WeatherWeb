@@ -9,7 +9,7 @@ CREATE TABLE user (
     user_role VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    deleted_at TIMESTAMP
+    deleted_at TIMESTAMP NULL
 );
 
 CREATE TABLE article (
@@ -20,7 +20,7 @@ CREATE TABLE article (
     article_content LONGTEXT,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    deleted_at TIMESTAMP
+    deleted_at TIMESTAMP NULL
 );
 
 CREATE TABLE board (
@@ -29,7 +29,7 @@ CREATE TABLE board (
     user_id VARCHAR(20),
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    deleted_at TIMESTAMP
+    deleted_at TIMESTAMP NULL
 );
 
 CREATE TABLE token (
@@ -39,7 +39,7 @@ CREATE TABLE token (
     fcm_token VARCHAR(32) UNIQUE,
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
-    deleted_at TIMESTAMP
+    deleted_at TIMESTAMP NULL
 );
 
 ALTER TABLE article add foreign key (user_id) references user(user_id);
