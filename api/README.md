@@ -41,6 +41,10 @@ Refer [this page](../API_doc.md) for more information.
   - <https://github.com/rs/cors>
 - Live Reloading
   - <https://techinscribed.com/5-ways-to-live-reloading-go-applications/>
+- JSON
+  - <http://golang.site/go/article/104-JSON-사용>
+  - <https://golang.org/pkg/encoding/json/>
+  - <https://jeonghwan-kim.github.io/dev/2019/01/18/go-encoding-json.html>
 
 ### Gin
 

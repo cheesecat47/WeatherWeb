@@ -9,22 +9,31 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// func TestCreateUser(t *testing.T) {
-// 	user := model.User{
-// 		UserID:    "pororo",
-// 		UserEmail: "pororo@abc.com",
-// 		UserPW:    "pw4",
-// 		UserName:  "pororo"}
-// 	err := db.Table("user").Create(&user)
-// 	assert.Equal(t, nil, err.Error, fmt.Errorf("Error: %v", err.Error))
-// 	log.Println("TestCreateUser: Create User")
-// }
+func TestCreateUser(t *testing.T) {
+	json := `
+	{
+		"UserID": "pororo",
+		"UserEmail": "pororo@abc.com",
+		"UserPW": "pw4",
+		"UserName": "pororo",
+		"UserRole": "NULL"
+	}`
+	log.Printf("TestCreateUser: Create User: json:\n%s", json)
+
+	err := model.CreateUser(json)
+	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
+	log.Println("TestCreateUser: Create User")
+}
 
 // TestGetUserByID func
 func TestGetUserByID(t *testing.T) {
 	user, err := model.GetUserByID("jy")
 	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
-	log.Println("TestGetUser: user:", user)
+	log.Printf("TestGetUser: user:\n%s", string(user))
+
+	user2, err := model.DecodeUserToJSON(user)
+	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
+	log.Println("TestGetUser: user2:", user2)
 }
 
 // func TestUpdateUser(t *testing.T) {
