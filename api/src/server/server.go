@@ -20,16 +20,12 @@ func Start(port string) {
 	// gin.SetMode(gin.ReleaseMode)
 	gopath := os.Getenv("GOPATH")
 	log.Printf("gopath: %s", gopath)
-	// https://gin-gonic.com/ko-kr/docs/examples/write-log/
-	// https://github.com/gin-gonic/gin#how-to-write-log-file
-	// https://jeonghwan-kim.github.io/dev/2019/01/14/go-time.html
 	f, _ := os.Create("logs/" + time.Now().Format(time.RFC3339) + ".log")
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	router := gin.Default()
 
 	go model.InitDB()
 
-	// https://riptutorial.com/ko/go/example/29299/gin을-사용한-restfull-프로젝트-api#undefined
 	// router.Use('/v1', )
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -42,13 +38,11 @@ func Start(port string) {
 		log.Printf("Defaulting to port %s", port)
 	}
 
-	// https://github.com/gin-gonic/gin#manually
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
 	}
 
-	// https://github.com/gin-gonic/gin#graceful-shutdown-or-restart
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below
 	go func() {

@@ -41,7 +41,6 @@ services:
     build:
       context: .
       dockerfile: ./api.Dockerfile
-    image: golang:1.15.7
     ports:
       - 35000:8080
     depends_on: 
