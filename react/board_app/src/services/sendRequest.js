@@ -15,10 +15,10 @@ export const sendGet = axios.create({
 //POST axios config...
 export const sendPost = axios.create({
   baseURL: config.API_SERVER_URL,
-  //     header:{
-  //   "Authorization": token, // Bearer Token for authority
-  //   "Content-Type": "application-json"
-  // }
+      header:{
+    // "Authorization": token, // Bearer Token for authority
+    "Content-Type": "application-json"
+  },
   // data: {
   //   "boardId": "9",
   //   "boardName": null,
