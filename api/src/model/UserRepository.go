@@ -1,13 +1,38 @@
 package model
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
+	"strings"
+	"sync"
 	"time"
 )
 
-var UserRepository = make(map[string]User)
+// UserRepository map
+type userRepository struct {
+	UserRepo map[string][]User
+}
+
+var (
+	instance *userRepository
+	once     sync.Once
+)
+
+// GetUserRepo func
+func GetUserRepo() *userRepository {
+	once.Do(func() {
+		instance = &userRepository{}
+		if instance.UserRepo == nil {
+			instance.UserRepo = make(map[string][]User)
+		}
+	})
+	return instance
+}
+
+func init() {
+	log.Println("UserRepository: init")
+	instance = GetUserRepo()
+}
 
 // CreateUser func
 func CreateUser(json string) error {
@@ -37,42 +62,22 @@ func CreateUser(json string) error {
 }
 
 // GetUser func
-// func GetUser() (*User, error) {
-// 	if user in UserRepository {
-// 		log.Println("UserRepository: GetUser: Hit cache")
+func GetUser(params map[string]string) ([]User, error) {
+	query := makeSelectQuery(params)
 
-// 	} else {
-// 		log.Println("UserRepository: GetUser: From querying db")
-// 		getUserInternal()
-// 	}
-// }
+	val, exists := instance.UserRepo[query]
+	if exists {
+		log.Println("UserRepository: GetUser: Hit repository")
+		return val, nil
+	}
+	log.Println("UserRepository: GetUser: From querying db")
+	result, err := getUserInternal(query, params)
+	instance.UserRepo[query] = result
+	return result, err
+}
 
 // getUserInternal func
-func GetUserInternal(params map[string]string) ([]User, error) {
-	query := fmt.Sprintf("SELECT")
-	paramOrder := [...]string{"attr", "from", "where", "order by", "limit"}
-
-	for _, p := range paramOrder {
-		switch val, exists := params[p]; p {
-		case "attr":
-			if !exists {
-				val = "*"
-			}
-			query += fmt.Sprintf(" %s", val)
-		case "from":
-			if !exists {
-				return nil, errorQueryParamMissing
-			}
-			query += fmt.Sprintf(" %s %s", p, val)
-		case "where", "order by", "limit":
-			if !exists {
-				continue
-			}
-			query += fmt.Sprintf(" %s %s", p, val)
-		}
-	}
-	log.Println("UserRepository: GetUserInternal: query:", query)
-
+func getUserInternal(query string, params map[string]string) ([]User, error) {
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Println("UserRepository: GetUserInternal: err: ", err)
@@ -82,23 +87,43 @@ func GetUserInternal(params map[string]string) ([]User, error) {
 
 	userArray := []User{}
 	for rows.Next() {
-		ru := RawUser{}
-		_, exists := params["attr"]
-		if !exists {
-			err = rows.Scan(
-				&ru.user.UserID, &ru.user.UserEmail, &ru.user.UserPW, &ru.user.UserName,
-				&ru.RawUserRole, &ru.user.CreatedAt, &ru.user.UpdatedAt, &ru.user.DeletedAt)
-		} else {
-			err = MyScan(rows, &ru)
-		}
+		temp := RawUser{}
+		err = rows.Scan(
+			&temp.user.UserID, &temp.user.UserEmail, &temp.user.UserPW, &temp.user.UserName,
+			&temp.RawUserRole, &temp.user.CreatedAt, &temp.user.UpdatedAt, &temp.user.DeletedAt)
 		if err != nil {
 			log.Println("UserRepository: GetUserInternal: err: ", err)
 			return nil, err
 		}
-		ru.checkNullString()
-		userArray = append(userArray, ru.user)
+
+		thisUser := User{}
+		_, exists := params["attr"]
+		if exists {
+			paramSlice := strings.Split(params["attr"], ", ")
+			for _, v := range paramSlice {
+				switch v {
+				case "user_id":
+					thisUser.UserID = temp.user.UserID
+				case "user_email":
+					thisUser.UserEmail = temp.user.UserEmail
+				case "user_pw":
+					thisUser.UserPW = temp.user.UserPW
+				case "user_name":
+					thisUser.UserName = temp.user.UserName
+				case "user_role":
+					temp.checkNullString()
+					thisUser.UserRole = temp.user.UserRole
+				case "created_at":
+					thisUser.CreatedAt = temp.user.CreatedAt
+				case "updated_at":
+					thisUser.UpdatedAt = temp.user.UpdatedAt
+				case "deleted_at":
+					thisUser.DeletedAt = temp.user.DeletedAt
+				}
+			}
+		}
+		userArray = append(userArray, thisUser)
 	}
-	log.Println("UserRepository: GetUserInternal: userArray: ", userArray)
 
 	log.Println("UserRepository: GetUserInternal: success")
 	return userArray, nil
@@ -154,12 +179,4 @@ func GetAllUsers() ([]byte, error) {
 
 	log.Println("UserRepository: GetAllUsers: success")
 	return EncodeUserToJSON(userArray)
-}
-
-// MyScan func
-func MyScan(rs *sql.Rows, dest interface{}) error {
-	log.Println("UserRepository: MyScan: rs:", rs)
-
-	log.Println("UserRepository: MyScan: dest:", dest)
-	return nil
 }

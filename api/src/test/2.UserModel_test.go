@@ -43,15 +43,25 @@ import (
 // 	log.Printf("TestGetAllUsers: users:\n%s", string(users))
 // }
 
-// TestGetUserInternal func
-func TestGetUserInternal(t *testing.T) {
+// TestGetUserUsingRepository func
+func TestGetUserUsingRepository(t *testing.T) {
 	params := map[string]string{
 		"attr":     "user_id, user_name",
 		"from":     "user",
 		"order by": "user_name"}
-	_, err := model.GetUserInternal(params)
+	users, err := model.GetUser(params)
 	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
-	log.Printf("TestGetUserInternal")
+	log.Println("TestGetUserUsingRepository: users1:", users)
+	fmt.Println("")
+
+	users, err = model.GetUser(params)
+	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
+	log.Println("TestGetUserUsingRepository: users2:", users)
+	fmt.Println("")
+
+	users, err = model.GetUser(params)
+	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
+	log.Println("TestGetUserUsingRepository: users3:", users)
 }
 
 // func TestUpdateUser(t *testing.T) {
