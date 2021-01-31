@@ -36,6 +36,13 @@ func TestGetUserByID(t *testing.T) {
 	log.Println("TestGetUser: user2:", user2)
 }
 
+// TestGetAllUsers func
+func TestGetAllUsers(t *testing.T) {
+	users, err := model.GetAllUsers()
+	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
+	log.Printf("TestGetAllUsers: users:\n%s", string(users))
+}
+
 // func TestUpdateUser(t *testing.T) {
 // 	var user model.User
 

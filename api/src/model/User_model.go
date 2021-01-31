@@ -22,24 +22,25 @@ type User struct {
 
 // RawUser struct
 type RawUser struct {
-	User
+	user        User
 	RawUserRole sql.NullString `db:"user_role"`
 }
 
 // checkNullString func
-func (u *RawUser) checkNullString() {
-	if u.RawUserRole.Valid {
-		log.Println("User_model: checkNullString: valid")
-		u.UserRole = u.RawUserRole.String
+func (ru *RawUser) checkNullString() {
+	if ru.RawUserRole.Valid {
+		// log.Println("User_model: checkNullString: valid")
+		ru.user.UserRole = ru.RawUserRole.String
 	} else {
-		log.Println("User_model: checkNullString: NULL")
-		u.UserRole = "NULL"
+		// log.Println("User_model: checkNullString: NULL")
+		ru.user.UserRole = "NULL"
 	}
+	log.Println("User_model: checkNullString: success")
 }
 
 // EncodeUserToJSON func
-func (u *User) EncodeUserToJSON() ([]byte, error) {
-	jsonBytes, err := json.MarshalIndent(u, "", " ")
+func EncodeUserToJSON(v interface{}) ([]byte, error) {
+	jsonBytes, err := json.MarshalIndent(v, "", " ")
 	if err != nil {
 		log.Println("User_model: EncodeUserToJSON: err:", err)
 		return nil, errorCantEncodeJSON
@@ -50,14 +51,14 @@ func (u *User) EncodeUserToJSON() ([]byte, error) {
 
 // DecodeUserToJSON func
 func DecodeUserToJSON(jsonBytes []byte) (User, error) {
-	var user User
-	err := json.Unmarshal(jsonBytes, &user)
+	var temp User
+	err := json.Unmarshal(jsonBytes, &temp)
 	if err != nil {
 		log.Println("User_model: DecodeUserToJSON: err:", err)
-		return user, errorCantDecodeJSON
+		return temp, errorCantDecodeJSON
 	}
 	log.Println("User_model: DecodeUserToJSON: success")
-	return user, nil
+	return temp, nil
 }
 
 // CreateUser func
@@ -89,19 +90,54 @@ func CreateUser(json string) error {
 
 // GetUserByID func
 func GetUserByID(id string) ([]byte, error) {
-	u := RawUser{}
+	ru := RawUser{}
 	query := fmt.Sprintf("SELECT * FROM user WHERE user_id = '%s'", id)
 	// log.Println("User_model: GetUserByID: query:", query)
 
 	err := db.QueryRow(query).Scan(
-		&u.UserID, &u.UserEmail, &u.UserPW, &u.UserName,
-		&u.RawUserRole, &u.CreatedAt, &u.UpdatedAt, &u.DeletedAt)
+		&ru.user.UserID, &ru.user.UserEmail, &ru.user.UserPW, &ru.user.UserName,
+		&ru.RawUserRole, &ru.user.CreatedAt, &ru.user.UpdatedAt, &ru.user.DeletedAt)
 	if err != nil {
 		log.Println("User_model: GetUserByID: err: ", err)
 		return nil, err
 	}
 
-	u.checkNullString()
+	ru.checkNullString()
 	log.Println("User_model: GetUserByID: success")
-	return u.EncodeUserToJSON()
+	return EncodeUserToJSON(ru.user)
+}
+
+// GetAllUsers func
+func GetAllUsers() ([]byte, error) {
+
+	query := fmt.Sprintf("SELECT * FROM user ORDER BY user_id")
+	log.Println("User_model: GetAllUsers: query:", query)
+
+	rows, err := db.Query(query)
+	// .Scan(
+	// 	&u.UserID, &u.UserEmail, &u.UserPW, &u.UserName,
+	// 	&u.RawUserRole, &u.CreatedAt, &u.UpdatedAt, &u.DeletedAt)
+	if err != nil {
+		log.Println("User_model: GetAllUsers: err: ", err)
+		return nil, err
+	}
+	defer rows.Close()
+
+	userArray := []User{}
+	for rows.Next() {
+		ru := RawUser{}
+		err := rows.Scan(
+			&ru.user.UserID, &ru.user.UserEmail, &ru.user.UserPW, &ru.user.UserName,
+			&ru.RawUserRole, &ru.user.CreatedAt, &ru.user.UpdatedAt, &ru.user.DeletedAt)
+		if err != nil {
+			log.Println("User_model: GetAllUsers: err: ", err)
+			return nil, err
+		}
+		ru.checkNullString()
+		userArray = append(userArray, ru.user)
+	}
+	log.Println("User_model: GetAllUsers: userArray: ", userArray)
+
+	log.Println("User_model: GetAllUsers: success")
+	return EncodeUserToJSON(userArray)
 }

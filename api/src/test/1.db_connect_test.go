@@ -24,10 +24,3 @@ func TestDBConnection(t *testing.T) {
 	err = model.InitDB()
 	assert.Equal(t, nil, err, fmt.Errorf("TestDBConnection: Error: %v", err))
 }
-
-// TestClosedDB func
-// func TestClosedDB(t *testing.T) {
-// 	err = model.CloseDB()
-// 	assert.Equal(t, nil, err,
-// 		fmt.Errorf("TestClosedDB: Error: %v", err))
-// }
