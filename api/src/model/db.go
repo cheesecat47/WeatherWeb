@@ -19,12 +19,13 @@ var (
 )
 
 var (
-	errorCantConnectDB  = errors.New("Can't connect DB")
-	errorCantOpenDB     = errors.New("Can't open DB")
-	errorCantCloseDB    = errors.New("Can't close DB")
-	errorCantEncodeJSON = errors.New("Can't encode to JSON")
-	errorCantDecodeJSON = errors.New("Can't decode to JSON")
-	errorCantCreateUser = errors.New("Can't create a new user")
+	errorCantConnectDB     = errors.New("Can't connect DB")
+	errorCantOpenDB        = errors.New("Can't open DB")
+	errorCantCloseDB       = errors.New("Can't close DB")
+	errorCantEncodeJSON    = errors.New("Can't encode to JSON")
+	errorCantDecodeJSON    = errors.New("Can't decode to JSON")
+	errorCantCreateUser    = errors.New("Can't create a new user")
+	errorQueryParamMissing = errors.New("There's no query parameter")
 )
 
 // InitDB func

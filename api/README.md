@@ -68,6 +68,9 @@ Refer [this page](../API_doc.md) for more information.
 - <https://golang.org/pkg/database/sql/>
 - <https://pkg.go.dev/github.com/go-sql-driver/mysql?utm_source=gopls#readme-installation>
 - <https://mariadb.com/ko/resources/blog/using-go-with-mariadb/>
+- <http://jameskim79.ipdisk.co.kr:8000/apps/wordpress/mariadb-명령어-및-사용법/>
+- Connection Pool
+  - <https://www.popit.kr/golang-databasesql-패키지-삽질기-3편-커넥션-풀/>
 - NullString Conversion errors
   - <https://findstar.pe.kr/2018/01/23/null-scan-for-mysql-struct-golang/>
   - <https://golang.org/pkg/database/sql/#NullString>
