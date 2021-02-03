@@ -32,7 +32,7 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		//c.Get("userInfo")으로 받아야함...
-		c.JSON(http.StatusOK, "Authorization success")
+		c.JSON(http.StatusOK, "Authorization success\n")
 		c.Set("userInfo", claims)
 		c.Next()
 	}

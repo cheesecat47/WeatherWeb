@@ -3,11 +3,11 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 )
 
 //JwtInfo struct is secret key for signing token
@@ -23,18 +23,16 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-var expTime = 15 * time.Minute
-
 //GenerateToken func
 func (j *JwtInfo) GenerateToken(userID string, userEmail string) (string, error) {
-	expTime := time.Now().Add(expTime)
-	log.Println(userEmail, userID)
+	expTime := time.Now().Add(15 * time.Minute)
 	claims := &Claims{
 		UserID:    userID,
 		UserEmail: userEmail,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expTime.Unix(),
 			Issuer:    j.Issuer,
+			IssuedAt:  time.Now().Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -43,6 +41,46 @@ func (j *JwtInfo) GenerateToken(userID string, userEmail string) (string, error)
 		return "", fmt.Errorf("token singed Error")
 	}
 	return signedToken, nil
+}
+
+//GenerateTokenPair func is generating pair token {access_token,refresh_token}
+func (j *JwtInfo) GenerateTokenPair(userID string, userEmail string) (map[string]string, error) {
+	aTokenExpTime := time.Now().Add(15 * time.Minute)
+	aTokenClaims := &Claims{
+		UserID:    userID,
+		UserEmail: userEmail,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: aTokenExpTime.Unix(),
+			Issuer:    j.Issuer,
+			IssuedAt:  time.Now().Unix(),
+		},
+	}
+	aToken := jwt.NewWithClaims(jwt.SigningMethodHS256, aTokenClaims)
+	aTokenSigned, err := aToken.SignedString([]byte(j.JwtKey))
+	if err != nil {
+		return nil, err
+	}
+
+	rTokenExpTime := time.Now().Add(time.Hour * 24)
+	rTokenClaims := &Claims{
+		UserID:    userID,
+		UserEmail: userEmail,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: rTokenExpTime.Unix(),
+			Issuer:    j.Issuer,
+			IssuedAt:  time.Now().Unix(),
+		},
+	}
+	rToken := jwt.NewWithClaims(jwt.SigningMethodHS256, rTokenClaims)
+	rTokenSigned, err := rToken.SignedString([]byte(j.JwtKey))
+	if err != nil {
+		return nil, err
+	}
+
+	return map[string]string{
+		"accessToken":  aTokenSigned,
+		"refreshToken": rTokenSigned,
+	}, nil
 }
 
 //ValidateToken func
@@ -82,4 +120,9 @@ func ExtractToken(req string) string {
 	}
 
 	return clientToken
+}
+
+//RefreshToken func
+func RefreshToken(c *gin.Context) {
+
 }

@@ -48,14 +48,15 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	//Get user data from model?...
-	if tempUser.UserName != u.UserName && tempUser.UserPW != u.UserPW {
-		c.JSON(http.StatusUnauthorized, gin.H{"status": http.StatusUnauthorized, "errors": "give me vaild login info"})
+	//need to get user's data from db
+	if "atg0831@naver.com" != u.UserEmail && "1234" != u.UserPW {
+		c.JSON(http.StatusUnauthorized, gin.H{"status": http.StatusUnauthorized, "errors": "Wrong Password"})
 		return
 	}
 	//Should set JwtKey secret
 	jwtInfo := JwtInfo{JwtKey: "ACCESS_TOKEN", Issuer: "atg0831"}
-	token, err := jwtInfo.GenerateToken(tempUser.UserID, tempUser.UserEmail)
+	//need to change args to user's data from db
+	token, err := jwtInfo.GenerateTokenPair("1", "atg0831@naver.com")
 
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"status": http.StatusUnprocessableEntity, "errors": err.Error()})
