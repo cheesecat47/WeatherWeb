@@ -5,20 +5,21 @@ root: ./
 
 windows:
   - main:
-      layout: main-vertical
+      layout: e7b8,120x37,0,0{60x37,0,0,0,59x37,61,0,2}
       panes:
-          - ./up.sh && exit
-  - kafka: 
-      layout: d6d3,130x40,0,0{63x40,0,0,1,66x40,64,0,4}
-      panes:
-          - sudo docker logs -f kafka_zk
-          - sudo docker logs -f kafka
-  - mariadb:
-      layout: main-vertical
-      panes:
-          - sudo docker logs -f db_maria
-  - nginx:
-      layout: main-vertical
-      panes:
-          - sudo docker logs -f nginx
+          - ls && echo "" && git status
+          - ./dkcp-run.sh --dev-build all --log
+#   - kafka: 
+#       layout: d6d3,130x40,0,0{63x40,0,0,1,66x40,64,0,4}
+#       panes:
+#           - sudo docker logs -f kafka_zk
+#           - sudo docker logs -f kafka
+#   - mariadb:
+#       layout: main-vertical
+#       panes:
+#           - sudo docker logs -f db_maria
+#   - nginx:
+#       layout: main-vertical
+#       panes:
+#           - sudo docker logs -f nginx
   # - logs: tail -f log/development.log

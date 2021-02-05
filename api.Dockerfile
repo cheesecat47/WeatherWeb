@@ -4,7 +4,8 @@ COPY ./api/src /go/src
 
 WORKDIR /go/src/
 
-RUN go build -o webpractice
+RUN go install && \
+    go build -o webpractice
 
 FROM golang:1.15.7
 COPY --from=builder /go/src /go/src
