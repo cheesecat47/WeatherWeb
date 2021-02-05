@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"testing"
+	"time"
 
 	"github.com/cheesecat47/webpractice/api/model"
 	"github.com/stretchr/testify/assert"
@@ -46,22 +47,30 @@ import (
 // TestGetUserUsingRepository func
 func TestGetUserUsingRepository(t *testing.T) {
 	params := map[string]string{
-		"attr":     "user_id, user_name",
 		"from":     "user",
 		"order by": "user_name"}
+	startTime := time.Now()
 	users, err := model.GetUser(params)
+	elapsedTime := time.Since(startTime)
 	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
 	log.Println("TestGetUserUsingRepository: users1:", users)
+	log.Println("TestGetUserUsingRepository: elapsedTime:", elapsedTime)
 	fmt.Println("")
 
+	startTime = time.Now()
 	users, err = model.GetUser(params)
+	elapsedTime = time.Since(startTime)
 	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
 	log.Println("TestGetUserUsingRepository: users2:", users)
+	log.Println("TestGetUserUsingRepository: elapsedTime:", elapsedTime)
 	fmt.Println("")
 
+	startTime = time.Now()
 	users, err = model.GetUser(params)
+	elapsedTime = time.Since(startTime)
 	assert.Equal(t, nil, err, fmt.Errorf("Error: %v", err))
 	log.Println("TestGetUserUsingRepository: users3:", users)
+	log.Println("TestGetUserUsingRepository: elapsedTime:", elapsedTime)
 }
 
 // func TestUpdateUser(t *testing.T) {

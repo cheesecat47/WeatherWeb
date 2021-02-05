@@ -3,7 +3,6 @@ package model
 import (
 	"fmt"
 	"log"
-	"strings"
 	"sync"
 	"time"
 )
@@ -71,13 +70,13 @@ func GetUser(params map[string]string) ([]User, error) {
 		return val, nil
 	}
 	log.Println("UserRepository: GetUser: From querying db")
-	result, err := getUserInternal(query, params)
+	result, err := getUserInternal(query)
 	instance.UserRepo[query] = result
 	return result, err
 }
 
 // getUserInternal func
-func getUserInternal(query string, params map[string]string) ([]User, error) {
+func getUserInternal(query string) ([]User, error) {
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Println("UserRepository: GetUserInternal: err: ", err)
@@ -95,34 +94,7 @@ func getUserInternal(query string, params map[string]string) ([]User, error) {
 			log.Println("UserRepository: GetUserInternal: err: ", err)
 			return nil, err
 		}
-
-		thisUser := User{}
-		_, exists := params["attr"]
-		if exists {
-			paramSlice := strings.Split(params["attr"], ", ")
-			for _, v := range paramSlice {
-				switch v {
-				case "user_id":
-					thisUser.UserID = temp.user.UserID
-				case "user_email":
-					thisUser.UserEmail = temp.user.UserEmail
-				case "user_pw":
-					thisUser.UserPW = temp.user.UserPW
-				case "user_name":
-					thisUser.UserName = temp.user.UserName
-				case "user_role":
-					temp.checkNullString()
-					thisUser.UserRole = temp.user.UserRole
-				case "created_at":
-					thisUser.CreatedAt = temp.user.CreatedAt
-				case "updated_at":
-					thisUser.UpdatedAt = temp.user.UpdatedAt
-				case "deleted_at":
-					thisUser.DeletedAt = temp.user.DeletedAt
-				}
-			}
-		}
-		userArray = append(userArray, thisUser)
+		userArray = append(userArray, temp.user)
 	}
 
 	log.Println("UserRepository: GetUserInternal: success")
@@ -130,23 +102,21 @@ func getUserInternal(query string, params map[string]string) ([]User, error) {
 }
 
 // GetUserByID func
-func GetUserByID(id string) ([]byte, error) {
-	ru := RawUser{}
-	query := fmt.Sprintf("SELECT * FROM user WHERE user_id = '%s'", id)
-	// log.Println("User_model: GetUserByID: query:", query)
+func GetUserByID(id string) ([]User, error) {
+	query := makeSelectQuery(
+		map[string]string{
+			"from":  "user",
+			"where": fmt.Sprintf("user_id=%s", id)})
 
-	row := db.QueryRow(query)
-	err := row.Scan(
-		&ru.user.UserID, &ru.user.UserEmail, &ru.user.UserPW, &ru.user.UserName,
-		&ru.RawUserRole, &ru.user.CreatedAt, &ru.user.UpdatedAt, &ru.user.DeletedAt)
-	if err != nil {
-		log.Println("UserRepository: GetUserByID: err: ", err)
-		return nil, err
+	val, exists := instance.UserRepo[query]
+	if exists {
+		log.Println("UserRepository: GetUserByID: Hit repository")
+		return val, nil
 	}
-
-	ru.checkNullString()
-	log.Println("UserRepository: GetUserByID: success")
-	return EncodeUserToJSON(ru.user)
+	log.Println("UserRepository: GetUserByID: From querying db")
+	result, err := getUserInternal(query)
+	instance.UserRepo[query] = result
+	return result, err
 }
 
 // GetAllUsers func
