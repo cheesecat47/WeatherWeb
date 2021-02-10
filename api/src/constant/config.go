@@ -11,3 +11,8 @@ var (
 	MysqlRootPw   string = os.Getenv("MYSQL_ROOT_PASSWORD")
 	MysqlUser     string = os.Getenv("MYSQL_USER")
 )
+
+var (
+	AccessKey  string = os.Getenv("ACCESS_KEY")
+	RefreshKey string = os.Getenv("REFRESH_KEY")
+)

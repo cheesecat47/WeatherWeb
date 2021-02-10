@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/cheesecat47/webpractice/api/controller"
+	"github.com/cheesecat47/webpractice/api/helper"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,14 +16,14 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		clientToken := controller.ExtractToken(reqHeader)
+		clientToken := helper.ExtractToken(reqHeader)
 		if clientToken == "" {
 			c.JSON(400, "Invalid format of authorization token")
 			c.Abort()
 			return
 		}
-		//JwtKey:ACCESS_TOKEN is temporal
-		jwtInfo := controller.JwtInfo{JwtKey: "ACCESS_TOKEN", Issuer: "atg0831"}
+		//JwtInfo:ACCESS_TOKEN is temporal
+		jwtInfo := helper.JwtInfo{AccessKey: "ACCESS_TOKEN", RefreshKey: "REFRESH_TOKEN", Issuer: "atg0831"}
 		claims, err := jwtInfo.ValidateToken(clientToken)
 
 		if err != nil {

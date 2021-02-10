@@ -1,9 +1,10 @@
-package controller
+package services
 
 import (
 	"log"
 	"net/http"
 
+	"github.com/cheesecat47/webpractice/api/helper"
 	"github.com/cheesecat47/webpractice/api/model"
 	"github.com/gin-gonic/gin"
 )
@@ -53,8 +54,10 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"status": http.StatusUnauthorized, "errors": "Wrong Password"})
 		return
 	}
+
 	//Should set JwtKey secret
-	jwtInfo := JwtInfo{JwtKey: "ACCESS_TOKEN", Issuer: "atg0831"}
+	jwtInfo := helper.JwtInfo{AccessKey: "ACCESS_TOKEN", RefreshKey: "REFRESH_KEY", Issuer: "atg0831"}
+
 	//need to change args to user's data from db
 	token, err := jwtInfo.GenerateTokenPair("1", "atg0831@naver.com")
 
@@ -64,21 +67,3 @@ func Login(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, token)
 }
-
-//Logout func
-func Logout(c *gin.Context) {
-
-}
-
-//DeleteUser func delete user data
-func DeleteUser(c *gin.Context) {
-	claim, _ := c.Get("userInfo")
-
-	log.Println(claim)
-	c.JSON(http.StatusOK, claim)
-
-	//Delete user data from DB logic
-
-}
-
-//modify user's password data func

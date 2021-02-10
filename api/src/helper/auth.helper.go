@@ -1,4 +1,4 @@
-package controller
+package helper
 
 import (
 	"errors"
@@ -7,13 +7,13 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 )
 
 //JwtInfo struct is secret key for signing token
 type JwtInfo struct {
-	JwtKey string //"ACCESS_TOKEN"
-	Issuer string //"cheesecat47/webpractice"...
+	AccessKey  string //"ACCESS_TOKEN"
+	RefreshKey string //"RERFRESH_TOKEN"
+	Issuer     string //"cheesecat47/webpractice"...
 }
 
 //Claims struct is for making jwt token
@@ -36,7 +36,7 @@ func (j *JwtInfo) GenerateToken(userID string, userEmail string) (string, error)
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString([]byte(j.JwtKey))
+	signedToken, err := token.SignedString([]byte(j.AccessKey))
 	if err != nil {
 		return "", fmt.Errorf("token singed Error")
 	}
@@ -56,7 +56,7 @@ func (j *JwtInfo) GenerateTokenPair(userID string, userEmail string) (map[string
 		},
 	}
 	aToken := jwt.NewWithClaims(jwt.SigningMethodHS256, aTokenClaims)
-	aTokenSigned, err := aToken.SignedString([]byte(j.JwtKey))
+	aTokenSigned, err := aToken.SignedString([]byte(j.AccessKey))
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (j *JwtInfo) GenerateTokenPair(userID string, userEmail string) (map[string
 		},
 	}
 	rToken := jwt.NewWithClaims(jwt.SigningMethodHS256, rTokenClaims)
-	rTokenSigned, err := rToken.SignedString([]byte(j.JwtKey))
+	rTokenSigned, err := rToken.SignedString([]byte(j.RefreshKey))
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func (j *JwtInfo) ValidateToken(signedToken string) (claims *Claims, err error) 
 		signedToken,
 		&Claims{},
 		func(token *jwt.Token) (interface{}, error) {
-			return []byte(j.JwtKey), nil
+			return []byte(j.AccessKey), nil
 		},
 	)
 	if err != nil {
@@ -120,9 +120,4 @@ func ExtractToken(req string) string {
 	}
 
 	return clientToken
-}
-
-//RefreshToken func
-func RefreshToken(c *gin.Context) {
-
 }
